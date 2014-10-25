@@ -26,7 +26,7 @@ const bool Resizable = false;
 const char Window_Title[] = "Anti-Chess";
 
    //-Rudamentry Function, just trying to draw the board. David will Re-Write--//
-   void DrawTable(GtkWidget *Table, GtkWidget *Square[]) {
+   void DrawChessBoard(GtkWidget *Table, GtkWidget *Square[]) {
       int OutCount = 0
       ;
       int YStart = 0;
@@ -39,17 +39,13 @@ const char Window_Title[] = "Anti-Chess";
          XStart = XEnd + 1;
          XEnd = XStart + 1;
          OutCount++;
-         if ( (OutCount % (YChessSquares - 1)) == 0) {
+         if ( (OutCount % (YChessSquares)) == 0) {
             YStart = YEnd + 1;
             YEnd = YStart + 1;
             XStart = 0;
             XEnd = 1;
          }
       }
-
-      /*gtk_table_attach(GTK_TABLE(Table), Square[0], 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-      gtk_table_attach(GTK_TABLE(Table), Square[1], 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
-      gtk_table_attach(GTK_TABLE(Table), Square[2], 0, 1, 4, 7, GTK_FILL, GTK_FILL, 0, 0);*/
 
   }
 
@@ -121,7 +117,7 @@ int main(int argc, char *argv[]) {
    Table = gtk_table_new(XChessSquares, YChessSquares, 0);
 
    //--Trial Function to draw table--//
-   DrawTable(Table, Square);
+   DrawChessBoard(Table, Square);
    
 
    //--Adds the table to the Window--//
