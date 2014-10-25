@@ -4,24 +4,26 @@ CFlags = -Wall
 
 #paths
 HeaderPath = headers/
-ObjectPath = objects/
+ObjectPath = obj/
 ExPath = bin/
 Cpp = cpp/
 
-main: $(ObjectPath)main.o $(ObjectPath)board.o $(ObjectPath)pawn.o
-	$(Compiler) $(CFlags) -o $(ExPath)main $(ObjectPath)main.o $(ObjectPath)board.o $(ObjectPath)pawn.o
 
-$(ObjectPath)main.o: $(Cpp)main.cpp $(HeaderPath)board.h $(HeaderPath)pawn.h
-	g++ -c $(Cpp)main.cpp -o $(ObjectPath)main.o
+antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o
+	$(Compiler) $(CFlags) -o $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o
 
-# $(ObjectPath)soldier.o: $(HeaderPath)soldier.h $(Cpp)soldier.cpp
-# 	g++ -c $(Cpp)soldier.cpp -o $(ObjectPath)soldier.o
+$(ObjectPath)main.o: $(Cpp)main.cpp $(HeaderPath)chessgame.h $(HeaderPath)board.h $(HeaderPath)soldier.h
+	$(Compiler) -c $(Cpp)main.cpp -o $(ObjectPath)main.o
 
-$(ObjectPath)board.o: $(HeaderPath)board.h $(Cpp)board.cpp $(HeaderPath)pawn.h 
-	g++ -c $(Cpp)board.cpp -o $(ObjectPath)board.o
+$(ObjectPath)chessgame.o: $(HeaderPath)chessgame.h $(Cpp)chessgame.cpp $(HeaderPath)board.h $(HeaderPath)soldier.h
+	$(Compiler) -c $(Cpp)chessgame.cpp -o $(ObjectPath)chessgame.o
 
-$(ObjectPath)pawn.o: $(HeaderPath)pawn.h $(Cpp)pawn.cpp
-	g++ -c $(Cpp)pawn.cpp -o $(ObjectPath)pawn.o
+$(ObjectPath)board.o: $(HeaderPath)board.h $(Cpp)board.cpp $(HeaderPath)soldier.h
+	$(Compiler) -c $(Cpp)board.cpp -o $(ObjectPath)board.o
+
+$(ObjectPath)soldier.o: $(HeaderPath)soldier.h $(Cpp)soldier.cpp
+	$(Compiler) -c $(Cpp)soldier.cpp -o $(ObjectPath)soldier.o
+
 
 clean:
-	rm $(ExPath)main $(ObjectPath)main.o $(ObjectPath)board.o $(ObjectPath)pawn.o
+	rm $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o

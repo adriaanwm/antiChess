@@ -1,62 +1,28 @@
 #ifndef BOARD
 #define BOARD
+
 #include <iostream>
-#include "pawn.h"
+#include "../headers/board.h"
+#include "../headers/soldier.h"
+
 using namespace std;
 
 class Board{
-private:
-	char squares[8][8];
-	char WhiteSquare;
-	char BlackSquare;
-	Pawn *soldiers[8][8];
-	Pawn *playerOne[16];
-	int numPlayerOneDead;
-	int numPlayerTwoDead;
-	Pawn *playerTwo[16];
-	void setupBoard();
-public:
-	Board();
-	void printBoard();
-	Pawn *getSoldier(int r, int c);
-	void updateSquares();
-	void updateSoldiers(int r, int c, int nr, int nc);
-	bool move(int r, int c, int nr, int nc);
-	bool occupied(int r, int c);
-	bool attack(int r, int c, int nr, int nc);
-	bool soldierCleanup(int r, int c);
-	bool handleMoveRequest(int r, int c, int nr, int nc);
+   private:
+		Soldier *soldier[8][8];
 
-	//check movement direction
-	bool isDiagonal(int r, int c, int nr, int nc);
-	bool isVertical(int r, int c, int nr, int nc);
-	bool isHorizontal(int r, int c, int nr, int nc);
-	bool isL(int r, int c, int nr, int nc);
+		//ascii
+		string square[8][8];
 
-	//check if move is blocked by soldiers
-	bool emptyDiagonal(int r, int c, int nr, int nc);
-	bool emptyVertical(int r, int c, int nr);
-	bool emptyHorizontal(int r, int c, int nc);
+   public:
+      Board();
+      bool move(int r, int c, int nr, int nc);
 
-	//check if attack is valid
-	bool canAttack(int r, int c, int nr, int nc);
-	bool canMove(int r, int c, int nr, int nc);
-	bool isAttack(int nr, int nc);
 
-	//check for attack
-	bool scanAttack(int r, int c);
-	bool scanTopRightDiagonal(int r, int c, int a[]);
-	bool scanTopLeftDiagonal(int r, int c, int a[]);
-	bool scanBottomLeftDiagonal(int r, int c, int a[]);
-	bool scanBottomRightDiagonal(int r, int c, int a[]);
+      //ascii
+      void asciiSetup();
+      void display();
 
-	//check if it's opponent
-	bool isOpponent(int r, int c, int nr, int nc);
 };
 
 #endif
-
-
-//getPlayer: who owns the piece on selected square
-	//(0 for empty, 1 for player 1, 2 for player 2)
-//
