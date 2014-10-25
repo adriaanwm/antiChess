@@ -2,31 +2,64 @@
 #include <cstring>
 #include <iostream>
 
+class BoardLocation {
+   private:
+      int X;
+      int Y;
+   public:
+      BoardLocation();
+      ~BoardLocation() {};
+      int getX();
+      int getY();
+      void setY(int PassedY);
+      void setX(int PassedX);
+};
+
 using namespace std;
 
-//--Size Of the Window in pixels--//
 const int Win_SizeX = 600;
 const int Win_SizeY = 600;
 
-//--Number of Squares on the ChessBoard--//
 const int XChessSquares = 8;
 const int YChessSquares = 8;
 const int TotalSquares = (XChessSquares * YChessSquares);
 
-//--FileNames of Images to Be loaded--//
-const char DarkNAME[] = "blvk.png";
-const char LightNAME[] = "wht.png";
-//-Used If to show the player what spots are Availible--//
-const char HoverNAME[] = "Highlighted.png";
+const char BLKNAME[] = "blvk.png";
+const char WHTNAME[] = "wht.png";
 
-//--Is the Window Resizeable? False = No, because The gameboard doesn't scale--//
+const gboolean Resize = false;
+
 const bool Resizable = false;
 
-//--Window Title--//
 const char Window_Title[] = "Anti-Chess";
 
-   //-Rudamentry Function, just trying to draw the board. David will Re-Write--//
-   void DrawTable(GtkWidget *Table, GtkWidget *Square[]) {
+BoardLocation::BoardLocation() {
+   X = 0;
+   Y = 0;
+}
+
+int BoardLocation::getX() {
+   return X;
+}
+
+int BoardLocation::getY() {
+   return Y;
+}
+
+void BoardLocation::setX(int PassedX) {
+   X = PassedX;
+}
+
+void BoardLocation::setY(int PassedY) {
+   Y = PassedY;
+}
+
+/*void UpdateImage(GtkWidget *widget)
+{
+  widget = gtk_image_new_from_file(WhiteSquareFileName);
+}*/
+
+  void DrawTable(GtkWidget *Table, GtkWidget *Square[]) {
       int OutCount = 0
       ;
       int YStart = 0;
@@ -59,7 +92,6 @@ int main(int argc, char *argv[]) {
 
    gtk_init(&argc, &argv);
 
-   //--Creates New GTK window Object--//
    MyWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
    //--Set the Window Title, Constant char Array--//
@@ -74,9 +106,10 @@ int main(int argc, char *argv[]) {
    //--Centers the Window--//
    gtk_window_set_position(GTK_WINDOW(MyWindow), GTK_WIN_POS_CENTER);
 
+  //Minus = gtk_button_new_with_label("Plus Button (+)");
 
-   //--WIll re wirte with new method only needed to load the images once per file--//
-   //--START OF LOOP, Creates new Image Object--//
+
+   //--START OF LOOP--//
    int P_COUNT = 0;
    int rowCount = 0;
    for (int i = 0; i <= TotalSquares; i++) {
@@ -84,12 +117,12 @@ int main(int argc, char *argv[]) {
       if ((rowCount % 2) == 0) {
 
          if ((i % 2) == 0) {
-            Square[i] = gtk_image_new_from_file(LightNAME);
+            Square[i] = gtk_image_new_from_file(WHTNAME);
             cout << " W ";
             P_COUNT++;
             
          } else {
-            Square[i] = gtk_image_new_from_file(DarkNAME);
+            Square[i] = gtk_image_new_from_file(BLKNAME);
             cout << " B ";
             P_COUNT++;
          }
@@ -97,12 +130,12 @@ int main(int argc, char *argv[]) {
       } else {
 
          if ((i % 2) != 0) {
-            Square[i] = gtk_image_new_from_file(LightNAME);
+            Square[i] = gtk_image_new_from_file(WHTNAME);
             cout << " W ";
             P_COUNT++;
             
          } else {
-            Square[i] = gtk_image_new_from_file(DarkNAME);
+            Square[i] = gtk_image_new_from_file(BLKNAME);
             cout << " B ";
             P_COUNT++;
          }
@@ -113,26 +146,46 @@ int main(int argc, char *argv[]) {
    } //--EMD OF LOOP --//
 
 
-   //--CallBack -- Makes the program close when the 'X' is pressed--//
+   //--Makes the program close when the 'X' is pressed--//
    g_signal_connect_swapped(G_OBJECT(MyWindow), "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
 
-   //--Creates a New Table obkect--//
+
    Table = gtk_table_new(XChessSquares, YChessSquares, 0);
 
-   //--Trial Function to draw table--//
-   DrawTable(Table, Square);
-   
 
-   //--Adds the table to the Window--//
+   // LOOP DOESN"TWORK
+   //int Pos = 0;
+   //while (Pos <= TotalSquares) {
+   DrawTable(Table, Square);
+      
+
+
+
+      /*gtk_table_attach(GTK_TABLE(Table), WhiteSquare, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_table_attach(GTK_TABLE(Table), BlackSquare2, 2, 3, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_table_attach(GTK_TABLE(Table), WhiteSquare2, 3, 4, 3, 4, GTK_FILL, GTK_FILL, 0, 0);*/
+
+
+      //Pos++;
+   //}
+
+
+
+   //g_signal_connect_swapped(G_OBJECT(BlackSquare2), "click", G_CALLBACK(UpdateImage), NULL);
+
+
    gtk_container_add(GTK_CONTAINER(MyWindow), Table);
    
+
+
 
    //--Show Window & Contents--//
    gtk_widget_show_all(MyWindow);
    gtk_main();
 
    return 0;
+
 }
 
 //compile with "g++ main.cpp -o out `pkg-config --cflags --libs gtk+-3.0`"
