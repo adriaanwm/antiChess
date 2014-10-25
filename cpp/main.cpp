@@ -12,7 +12,7 @@ void getPosition(string request, int *arr);
 
 int main(){
 
-	Board *board = new Board;	
+	Board *board = new Board;
 
 	board->printBoard();
 
@@ -24,7 +24,7 @@ int main(){
 		string request = "Enter the row and column of the soldier you'd like to move, separated by a space\n>";
 		int currentPos[2];
 		getPosition(request,currentPos);
-		
+
 
 		request = "Where would you like to move it\n";
 		int newPos[2];
@@ -53,4 +53,9 @@ void getPosition(string request, int arr[]){
 	iss.str("");
 	return;
 }
-
+//get piece to be moved from user
+//check if piece belongs to that player
+//show where that piece can be moved
+//select which place to move it
+//move the piece
+//

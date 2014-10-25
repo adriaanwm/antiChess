@@ -55,3 +55,8 @@ public:
 };
 
 #endif
+
+
+//getPlayer: who owns the piece on selected square
+	//(0 for empty, 1 for player 1, 2 for player 2)
+//
