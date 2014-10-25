@@ -1,6 +1,6 @@
 #include "../headers/chessgame.h"
 #include "../cpp/helpers.cpp"
-
+#include <stdlib.h>
 
 
 ChessGame::ChessGame(){

@@ -1,4 +1,5 @@
 #include <sstream>
+#include <cstdlib>
 
 namespace N {
 	//user selects which square they want to move from/to
