@@ -5,7 +5,7 @@ int main(){
 
 
 	ChessGame game;
-	game.play();
+	game.asciiPlay();
 	return 0;
 
 }

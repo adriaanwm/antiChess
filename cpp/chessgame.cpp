@@ -10,13 +10,12 @@ ChessGame::ChessGame(){
 
 }
 
-void ChessGame::play(){
+void ChessGame::asciiPlay(){
 
 	Board board;
 
-	cout << "starting player is: " << currentPlayer << endl;
-
 	while(!over){
+		cout << "current player is: " << currentPlayer << endl;
 		board.display();
 
 		string request = "which piece would you like to use?\n> ";
@@ -27,15 +26,28 @@ void ChessGame::play(){
 	   int newPosition[2];
 	   N::userSelectSquare(newPosition,request2);
 
-	   if(!board.move(piece[0],piece[1],newPosition[0],newPosition[1])){
+	   if(!board.move(piece[0],piece[1],newPosition[0],newPosition[1],currentPlayer)){
 	   	cout << "invalid move" << endl;
-	   };
+	   }else{
+	   	changePlayer();
+	   }
 	}
    return;
 }
 
-void ChessGame::startingPlayer(){
-	if(rand()<0.5) currentPlayer = "W";
-	else currentPlayer = "B";
+void ChessGame::guiPlay(){
 	return;
 }
+
+void ChessGame::startingPlayer(){
+	if(rand()<0.5) currentPlayer = "w";
+	else currentPlayer = "b";
+	return;
+}
+
+void ChessGame::changePlayer(){
+	if(currentPlayer == "w")
+		currentPlayer = "b";
+	else currentPlayer = "w";
+}
+

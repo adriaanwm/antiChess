@@ -15,11 +15,12 @@ class ChessGame{
 
    public:
       ChessGame();
-      void play();
+      void asciiPlay();
+      void guiPlay();
 
       //handle whose turn it is
       void startingPlayer();
-      char changePlayer();
+      void changePlayer();
 
 };
 
