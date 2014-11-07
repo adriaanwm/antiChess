@@ -14,10 +14,9 @@ void ChessGame::play(){
 
 	Board board;
 
+	cout << "starting player is: " << currentPlayer << endl;
+
 	while(!over){
-
-		cout << "starting player is: " << currentPlayer << endl;
-
 		board.display();
 
 		string request = "which piece would you like to use?\n> ";
@@ -31,12 +30,6 @@ void ChessGame::play(){
 	   if(!board.move(piece[0],piece[1],newPosition[0],newPosition[1])){
 	   	cout << "invalid move" << endl;
 	   };
-
-	   //userSelect(newPosition); //STUB
-	   //handleRequestedMove(piece,newPosition);
-
-
-
 	}
    return;
 }

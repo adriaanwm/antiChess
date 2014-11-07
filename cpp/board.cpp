@@ -15,6 +15,14 @@ bool Board::move(int r, int c, int nr, int nc){
 	return true;
 }
 
+
+
+bool Board::isColor(string color, int r, int c){
+	if(soldier[r][c]->getColor() == color) return true;
+	return false;
+}
+
+
 //ascii
 void Board::display(){
 
@@ -47,8 +55,8 @@ void Board::asciiSetup(){
 		}
 	}
 	for(int i=0;i<8;i++){
-		soldier[1][i] = new Soldier('W');
-		soldier[6][i] = new Soldier('B');
+		soldier[1][i] = new Soldier("W");
+		soldier[6][i] = new Soldier("B");
 	}
 	return;
 }

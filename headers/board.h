@@ -18,6 +18,9 @@ class Board{
       Board();
       bool move(int r, int c, int nr, int nc);
 
+      //check if player is trying to move their own piece
+      bool isColor(string color, int r, int c);
+
 
       //ascii
       void asciiSetup();

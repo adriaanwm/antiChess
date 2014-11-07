@@ -7,17 +7,17 @@ using namespace std;
 
 class Soldier{
 	private:
-		char color;
+		string color;
 
 
 	public:
-		Soldier(char player);
+		Soldier(string player);
 		~Soldier();
 
 		bool isValidMoveDirection(int r, int c, int nr, int nc);
-		char getSquareName();
+		string getSquareName();
 		bool isValidAttackDirection(int r,int c,int nr,int nc);
-		int getColor();
+		string getColor();
 
 };
 
