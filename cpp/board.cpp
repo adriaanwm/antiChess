@@ -2,43 +2,55 @@
 
 Board::Board(){
 
-	for (int i=7;i>=0;i--){
-		for(int j=7;j>=0;j--){
+	for (int i=0;i<8;i++){
+		for(int j=0;j<8;j++){
 			soldier[i][j]=NULL;
 		}
+	}
+	for (int k=0;k<16;k++){
+		whiteDeadSoldier[k] = NULL;
+		blackDeadSoldier[k] = NULL;
 	}
 	asciiSetup();
 
 }
 
 bool Board::move(int r, int c, int nr, int nc, string cp){
-	//check if piece belongs to current player
-	//if(!belongsToPlayer(cp,r,c)) return false;
+	if(r<0 || r>7 || c<0 || c>7 || nr<0 || nr>7 || nc<0 || nc>7) return false;
+
+	//check if piece belongs to current player (or if there's a piece at all)
+	if(!belongsToPlayer(cp,r,c)) return false;
+	//check if trying to move onto own piece
+	if(belongsToPlayer(cp, nr, nc))return false;
 	//check if it is an attack or just a move
 	//if it's an attack
 	if(isAttack(nr,nc)){
 		//check if it's a valid attack
-		cout << "one" << endl;
-		soldier[r][c]->isValidAttack(r,c,nr,nc);
-		cout << "two" << endl;
-		//do the attack
-		performAttack(r,c,nr,nc);
-		cout << "one" << endl;
+		if(soldier[r][c]->isValidAttack(r,c,nr,nc)){
+			//do the attack
+			performAttack(r,c,nr,nc);
+		}
 		return true;
 	}
+	//if it is just a move
 	else{
-
+		if(hasAvailableAttack()) return false;
+		else{
+			//check if it's a valid move
+			if(soldier[r][c]->isValidMove(r,c,nr,nc)){
+				//do the move
+				performMove(r,c,nr,nc);
+			}
+			return true;
+		}
 	}
-	//if it is just a move then scanforattack
-		//check if it is a valid movement
-		//do the move
 	return false;
 }
 
 
 
 bool Board::belongsToPlayer(string color, int r, int c){
-	cout << "zero" << endl;
+	if(soldier[r][c] == NULL) return false;
 	if(soldier[r][c]->getColor() == color) return true;
 	return false;
 }
@@ -63,27 +75,40 @@ bool Board::performAttack(int r, int c, int nr, int nc){
 	return false;
 }
 
+bool Board::performMove(int r, int c, int nr, int nc){
+
+	soldier[nr][nc] = soldier[r][c];
+	soldier[r][c] = NULL;
+	return true;
+}
+
+bool Board::hasAvailableAttack(){
+	return false;
+}
+
 bool Board::removeSoldierFromBoard(int r , int c, string color){
-	Soldier *temp;
-	int i=1;
+	int i=0;
 	if(color == "w"){
-		temp = whiteDeadSoldier[0];
-		while(temp != NULL && i<16){
-			temp = whiteDeadSoldier[i];
+		while(whiteDeadSoldier[i] != NULL && i<16){
 			i++;
 		}
-		temp = soldier[r][c];
+		whiteDeadSoldier[i] = soldier[r][c];
 		soldier[r][c] = NULL;
 		return true;
 	}
 	else if(color == "b"){
-		temp = blackDeadSoldier[0];
-		while(temp != NULL && i<16){
-			temp = blackDeadSoldier[i];
+		while(blackDeadSoldier[i] != NULL && i<16){
 			i++;
 		}
-		temp = soldier[r][c];
+		blackDeadSoldier[i] = soldier[r][c];
 		soldier[r][c] = NULL;
+		return true;
+	}
+	return false;
+}
+
+bool Board::gameOver(){
+	if(whiteDeadSoldier[15]!=NULL || blackDeadSoldier[15]!=NULL){
 		return true;
 	}
 	return false;
@@ -102,6 +127,21 @@ void Board::display(){
 		cout << endl;
 	}
 	cout << "  0  1  2  3  4  5  6  7"<<endl;
+
+	cout << "black dead soldiers: " ;
+	for (int i=0;i<15;i++){
+		if(blackDeadSoldier[i] != NULL){
+			cout << blackDeadSoldier[i]->getAsciiName() << " " ;
+		}
+	}
+	cout << endl;
+	cout << "white dead soldiers: " ;
+	for (int i=0;i<15;i++){
+		if(whiteDeadSoldier[i] != NULL){
+			cout << whiteDeadSoldier[i]->getAsciiName() << " " ;
+		}
+	}
+	cout << endl;
 	return;
 }
 

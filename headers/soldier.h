@@ -19,6 +19,7 @@ class Soldier{
 		string getSquareName();
 		//bool isValidAttackDirection(int r,int c,int nr,int nc);
 		bool isValidAttack(int r, int c, int nr, int nc);
+		bool isValidMove(int r, int c, int nr, int nc);
 		string getColor();
 
 		//ascii

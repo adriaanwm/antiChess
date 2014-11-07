@@ -29,6 +29,12 @@ class Board{
       bool isAttack(int r, int c);
       //Perform attack
       bool performAttack(int r, int c, int nr, int nc);
+      //check if player has any pieces that can attack
+      bool hasAvailableAttack();
+      //perform move
+      bool performMove(int r, int c, int nr, int nc);
+
+      bool gameOver();
 
 
 

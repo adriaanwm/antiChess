@@ -14,6 +14,10 @@ bool Soldier::isValidAttack(int r, int c, int nr, int nc){
 	return true;
 }
 
+bool Soldier::isValidMove(int r, int c, int nr, int nc){
+	return true;
+}
+
 string Soldier::getAsciiName(){
 	return asciiName;
 }
