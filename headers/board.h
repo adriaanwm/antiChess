@@ -9,7 +9,7 @@ using namespace std;
 
 class Board{
    private:
-		Soldier *soldier[8][8];
+	Soldier *soldier[8][8];
       Soldier *whiteDeadSoldier[16];
       Soldier *blackDeadSoldier[16];
 
@@ -36,12 +36,12 @@ class Board{
 
       bool gameOver();
 
-
-
-
       //ascii
       void asciiSetup();
       void display();
+
+      //GUI
+      void status(string arr[][8]);
 
 };
 

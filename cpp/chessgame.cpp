@@ -35,6 +35,7 @@ void ChessGame::asciiPlay(){
 	   if(board.gameOver()){
 	   	over = true;
 	   }
+
 	}
    return;
 }

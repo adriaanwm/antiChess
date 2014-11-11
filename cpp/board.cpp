@@ -167,3 +167,15 @@ void Board::asciiSetup(){
 	}
 	return;
 }
+
+//GUI
+void Board::status(string arr[][8]){
+	for(int i=0;i<8;i++){
+		for(int j=0;j<8;j++){
+			if(soldier[i][j] == NULL)
+				arr[i][j] = " ";
+			else
+				arr[i][j] = soldier[i][j]->getAsciiName();
+		}
+	}
+}
