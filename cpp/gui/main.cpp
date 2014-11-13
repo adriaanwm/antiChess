@@ -13,6 +13,8 @@
 using namespace std;
 
 
+int TopWindowSetup(GtkWidget *TopWindow);
+
 ///===CONSTANTS FOR GAMEPLAY===//
 
 //--Number of Squares on the ChessBoard--//
@@ -42,24 +44,7 @@ int main(int argc, char *argv[]) {
 
    //--Creates New GTK window Object--//
    TopWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-
-   //--Set the Window Title, Constant char Array--//
-   gtk_window_set_title(GTK_WINDOW(TopWindow), Window_Title);
-
-   //--Set the Window Size, (GTKWidget, Width, Height)--//
-   gtk_widget_set_size_request(TopWindow, Win_SizeX, Win_SizeY);
-
-   //--Make the Window not Resizeable--//
-   gtk_window_set_resizable(GTK_WINDOW(TopWindow), Resizable);
-
-   //--Centers the Window--//
-   gtk_window_set_position(GTK_WINDOW(TopWindow), GTK_WIN_POS_CENTER);
-
-   //--CallBack -- Makes the program close when the 'X' is pressed--//
-   g_signal_connect_swapped(G_OBJECT(TopWindow), "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-
-
+   TopWindowSetup(TopWindow);
 
    TopWidget = gtk_label_new("Foo Accepts c_str()");
    gtk_widget_set_size_request(TopWidget, TopBannerX, TopBannerY);
@@ -174,3 +159,24 @@ int main(int argc, char *argv[]) {
 //compile with "g++ main.cpp -o out `pkg-config --cflags --libs gtk+-3.0`"
 // 2.0 if at school
 
+
+
+int TopWindowSetup(GtkWidget *TopWindow) 
+{
+
+
+   //--Set the Window Title, Constant char Array--//
+   gtk_window_set_title(GTK_WINDOW(TopWindow), Window_Title);
+
+   //--Set the Window Size, (GTKWidget, Width, Height)--//
+   gtk_widget_set_size_request(TopWindow, Win_SizeX, Win_SizeY);
+
+   //--Make the Window not Resizeable--//
+   gtk_window_set_resizable(GTK_WINDOW(TopWindow), Resizable);
+
+   //--Centers the Window--//
+   gtk_window_set_position(GTK_WINDOW(TopWindow), GTK_WIN_POS_CENTER);
+
+   //--CallBack -- Makes the program close when the 'X' is pressed--//
+   g_signal_connect_swapped(G_OBJECT(TopWindow), "destroy", G_CALLBACK(gtk_main_quit), NULL);
+}
