@@ -1,8 +1,6 @@
 #ifndef GUICONST_H
 #define GUICONST_H
 
-#include <string>
-
 
 //====CONSTANTS FOR WINDOW DIMENSIONS & SETTINGS====///
 
@@ -30,10 +28,6 @@ const bool Resizable = false;
 
 //--Window Title--//
 const char Window_Title[] = "Anti-Chess";
-
-
-//===FileName Constants===//
-const std::string ImgFolder = "res/";
 
 
 //===Object Positioning Constants===///

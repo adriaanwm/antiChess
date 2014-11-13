@@ -1,3 +1,6 @@
+// Place all memebers of the board within a GTK event box.
+// Load images to pixbufffs, then new image from pixbuf.
+
 
 #include <gtk/gtk.h>
 #include <cstring>
@@ -5,6 +8,7 @@
 #include <iostream>
 
 #include "GUIConst.h"
+#include "FileNameConst.h"
 
 using namespace std;
 
@@ -20,7 +24,10 @@ const int TotalSquares = (XChessSquares * YChessSquares);
 
 int main(int argc, char *argv[]) {
 
-   //--Main Window Container--//
+   gtk_init(&argc, &argv);
+
+
+      //--Main Window Container--//
    GtkWidget *TopWindow;
 
    //--Table to hold all the contents of the window--//
@@ -31,12 +38,6 @@ int main(int argc, char *argv[]) {
 
    //--Top Textbox for Score, and bottom for status--//
    GtkWidget *TopWidget, *BottomWidget;
-
-
-
-
-   gtk_init(&argc, &argv);
-
 
 
    //--Creates New GTK window Object--//
@@ -111,9 +112,6 @@ int main(int argc, char *argv[]) {
       GTK_FILL, GTK_FILL, 
       0, 0
    );
-
-
-
 
    /* Test Layout with Images
 {  // These Brackets exist to enable hiding this segment of code in sublime (Text Editor)
