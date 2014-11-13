@@ -14,6 +14,9 @@ using namespace std;
 
 
 int TopWindowSetup(GtkWidget *TopWindow);
+int LoadImages();
+int InitContents();
+int DrawBoard();
 
 ///===CONSTANTS FOR GAMEPLAY===//
 
@@ -29,17 +32,12 @@ int main(int argc, char *argv[]) {
    gtk_init(&argc, &argv);
 
 
-      //--Main Window Container--//
-   GtkWidget *TopWindow;
-
-   //--Table to hold all the contents of the window--//
-   GtkWidget *MainFrame;
-
-   //--Chessboard Table--//
-   GtkWidget *BoardTable;
-
-   //--Top Textbox for Score, and bottom for status--//
-   GtkWidget *TopWidget, *BottomWidget;
+   GtkWidget 
+      *TopWindow,    //--Main Window Container--//
+      *MainFrame,    //--Table to hold all the contents of the window--//
+      *BoardTable,   //--Chessboard Table--//
+      *TopWidget,    //--Top Textbox for Score--// 
+      *BottomWidget; //--Bottom for status--//
 
 
    //--Creates New GTK window Object--//
