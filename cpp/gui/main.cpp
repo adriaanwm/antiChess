@@ -1,44 +1,78 @@
-// Place all memebers of the board within a GTK event box.
-// Load images to pixbufffs, then new image from pixbuf.
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+// Title:                           AntiChess GUI                                      //
+//                                                                                     //
+// File Name:     | main.cpp                                                           //
+// Creation Date: | 12/11/14                                                           //
+// Author:        | David Aarsen                                                       //
+//                                                                                     //
+// Purpose: To Provide a Graphical User Interface for the AntiChess Game.              //
+//          Displays a Chess Board and Unit locations, also submits moves              //
+//          to logic.                                                                  //
+//                                                                                     //
+// Notes: Place all members of the board within a GTK event box.                       //
+//        Load images to pixbufffs, then new image from pixbuf.                        //
+//                                                                                     //
+// References: http://zetcode.com/tutorials/gtktutorial/                               //
+//             https://developer.gnome.org/gtk-tutorial/2.90/                          //
+//                                                                                     //
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
 
+//=====INCLUDED LIBRARIES==============================================================//
 #include <gtk/gtk.h>
-#include <cstring>
 #include <string>
 #include <iostream>
 
+//=====INCLUDED FILES==================================================================//
+
+//--Includes Many Constants used by the window, (Size, Layout, title, ect...)--//
 #include "GUIConst.h"
+
+//--Includes the filenames of Images and Folders for resources--//
 #include "FileNameConst.h"
 
+//=====NAMESPACES======================================================================//
 using namespace std;
 
+//=====ENUMERATED DATATYPES============================================================//
+//--NONE--//
 
-int TopWindowSetup(GtkWidget *TopWindow);
-int LoadImages();
-int InitContents();
-int DrawBoard();
-
-///===CONSTANTS FOR GAMEPLAY===//
-
+//=====GLOBAL CONSTANTS================================================================//
 //--Number of Squares on the ChessBoard--//
 const int XChessSquares = 8;
 const int YChessSquares = 8;
 const int TotalSquares = (XChessSquares * YChessSquares);
 
+const int intFAILBIT = -6660666;
 
 
+//=====PROTOTYPES======================================================================//
+//--Applies Desired Properties (Dimensions, Title, Pos ect.) to the main window--//
+int TopWindowSetup(GtkWidget *TopWindow);
+
+//--Loads Images, Checks for Errors while Loading
+int LoadImages();
+int InitContents();
+int DrawBoard();
+
+//=====MAIN ROUTIENE===================================================================//
 int main(int argc, char *argv[]) {
 
    gtk_init(&argc, &argv);
-
 
    GtkWidget 
       *TopWindow,    //--Main Window Container--//
       *MainFrame,    //--Table to hold all the contents of the window--//
       *BoardTable,   //--Chessboard Table--//
-      *TopWidget,    //--Top Textbox for Score--// 
-      *BottomWidget; //--Bottom for status--//
-
+      *TopWidget,    //--Top Text box for Score--// 
+      *BottomWidget, //--Bottom for status--//
+      *AppIcon,
+      *BlackPIX,     
+      *WhitePIX,
+      *UnitPIX,
+      *BoardSquaresImg[TotalSquares],
+      *EventBoxes[TotalSquares]
+   ;
 
    //--Creates New GTK window Object--//
    TopWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -49,6 +83,7 @@ int main(int argc, char *argv[]) {
    gtk_label_set_justify(GTK_LABEL(TopWidget), GTK_JUSTIFY_CENTER);
 
    //--Creates a New Table Object to Act as the ChessBoard--//
+   //--TRUE because tables is Homogeneous (All blocks are the Same Size)--//
    BoardTable = gtk_table_new(XChessSquares, YChessSquares, TRUE);
    gtk_widget_set_size_request(BoardTable, TableSizeX, TableSizeY);
 
@@ -58,7 +93,8 @@ int main(int argc, char *argv[]) {
 
 
    //--Creates the Main Container to house all the objects in the window--//
-   MainFrame = gtk_table_new(CcountX, CcountY, FALSE);
+   //--FALSE because tables is not Homogeneous (Not all blocks are the same)--//
+   MainFrame = gtk_table_new(CcountX, CcountY, FALSE); 
    gtk_widget_set_size_request(MainFrame, Win_SizeX, Win_SizeY);
 
 
@@ -158,10 +194,10 @@ int main(int argc, char *argv[]) {
 // 2.0 if at school
 
 
-
+//=====TopWindowSetup==================================================================// *TopWindowSetup*
+//--Applies Desired Properties (Dimensions, Title, Pos, ect.) to the main window--//
 int TopWindowSetup(GtkWidget *TopWindow) 
 {
-
 
    //--Set the Window Title, Constant char Array--//
    gtk_window_set_title(GTK_WINDOW(TopWindow), Window_Title);
@@ -169,12 +205,17 @@ int TopWindowSetup(GtkWidget *TopWindow)
    //--Set the Window Size, (GTKWidget, Width, Height)--//
    gtk_widget_set_size_request(TopWindow, Win_SizeX, Win_SizeY);
 
-   //--Make the Window not Resizeable--//
+   //--Make the Window not Realizable--//
    gtk_window_set_resizable(GTK_WINDOW(TopWindow), Resizable);
 
    //--Centers the Window--//
    gtk_window_set_position(GTK_WINDOW(TopWindow), GTK_WIN_POS_CENTER);
 
    //--CallBack -- Makes the program close when the 'X' is pressed--//
-   g_signal_connect_swapped(G_OBJECT(TopWindow), "destroy", G_CALLBACK(gtk_main_quit), NULL);
+   g_signal_connect_swapped(
+      G_OBJECT(TopWindow), 
+      "destroy", 
+      G_CALLBACK(gtk_main_quit), 
+      NULL
+   );
 }
