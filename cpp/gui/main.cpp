@@ -70,7 +70,8 @@ int main(int argc, char *argv[]) {
       *BlackPIX,     
       *WhitePIX,
       *UnitPIX,
-      *BoardSquaresImg[TotalSquares],
+      *WhiteBoardSquare[(TotalSquares/2)],
+      *BlackBoardSquare[(TotalSquares/2)],
       *EventBoxes[TotalSquares]
    ;
 
