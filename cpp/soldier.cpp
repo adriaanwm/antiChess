@@ -24,7 +24,7 @@ string Soldier::getAsciiName(){
 
 bool Soldier::isKing(){return false;}
 bool Soldier::isQueen(){return false;}
-bool Soldier::isPawn(){return false;}
+bool Soldier::isPawn(){return true;}
 bool Soldier::isBishop(){return false;}
 bool Soldier::isRook(){return false;}
-bool Soldier::isKnight(){return true;}
+bool Soldier::isKnight(){return false;}

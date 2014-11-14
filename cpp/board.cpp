@@ -97,6 +97,8 @@ bool Board::hasAvailableAttack(string player){
 						if(hasAttackIsKing(i,j,player)) return true;
 					}else if(soldier[i][j]->isKnight()){
 						if(hasAttackIsKnight(i,j,player)) return true;
+					}else if(soldier[i][j]->isPawn()){
+						if(hasAttackIsPawn(i,j,player)) return true;
 					}
 				}
 			}
@@ -200,12 +202,27 @@ bool Board::hasAttackIsKnight(int r,int c,string player){
 	return false;
 }
 
+bool Board::hasAttackIsPawn(int r,int c,string player){
+	if(player == "w"){
+		if(r<7){
+			if(c<7 && isAttack(r+1,c+1,player)) return true;
+			if(c>0 && isAttack(r+1,c-1,player)) return true;
+		}
+	}else{
+		if(r>0){
+			if(c<7 && isAttack(r-1,c+1,player)) return true;
+			if(c>0 && isAttack(r-1,c-1,player)) return true;
+		}
+	}
+	return false;
+}
+
 
 
 //ascii
 void Board::display(){
 
-	for (int i=0;i<8;i++){
+	for (int i=7;i>=0;i--){
 		cout << i << " ";
 		for(int j=0;j<8;j++){
 			if (soldier[i][j]!=NULL) cout << soldier[i][j]->getAsciiName() << " ";
