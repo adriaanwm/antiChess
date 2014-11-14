@@ -200,6 +200,8 @@ bool Board::hasAttackIsKnight(int r,int c,string player){
 	return false;
 }
 
+
+
 //ascii
 void Board::display(){
 
