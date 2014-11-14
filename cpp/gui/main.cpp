@@ -50,9 +50,21 @@ const int intFAILBIT = -6660666;
 //--Applies Desired Properties (Dimensions, Title, Pos ect.) to the main window--//
 int TopWindowSetup(GtkWidget *TopWindow);
 
+//--Tests window layout with color block images--//
+//void TestLayout(GtkWidget *MainFrame);
+
 //--Loads Images, Checks for Errors while Loading
 int LoadImages();
-int InitContents();
+
+//--Attaches Widgets to Window (MainFrame)--//
+int AttachWidgets(
+   GtkWidget *MainFrame, 
+   GtkWidget *TopWidget, 
+   GtkWidget *BoardTable, 
+   GtkWidget *BottomWidget
+);
+
+
 int DrawBoard();
 
 //=====MAIN ROUTIENE===================================================================//
@@ -79,24 +91,112 @@ int main(int argc, char *argv[]) {
    TopWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
    TopWindowSetup(TopWindow);
 
-   TopWidget = gtk_label_new("Foo Accepts c_str()");
-   gtk_widget_set_size_request(TopWidget, TopBannerX, TopBannerY);
-   gtk_label_set_justify(GTK_LABEL(TopWidget), GTK_JUSTIFY_CENTER);
 
-   //--Creates a New Table Object to Act as the ChessBoard--//
-   //--TRUE because tables is Homogeneous (All blocks are the Same Size)--//
-   BoardTable = gtk_table_new(XChessSquares, YChessSquares, TRUE);
-   gtk_widget_set_size_request(BoardTable, TableSizeX, TableSizeY);
-
-   BottomWidget = gtk_label_new("Working");
-   gtk_widget_set_size_request(BoardTable, BottomBannerX, BottomBannerY);
-   gtk_label_set_justify(GTK_LABEL(BottomWidget), GTK_JUSTIFY_CENTER);
-
+   //--Container Objects Must be Initialized Here, otherwise GTK will have errors--//
 
    //--Creates the Main Container to house all the objects in the window--//
    //--FALSE because tables is not Homogeneous (Not all blocks are the same)--//
    MainFrame = gtk_table_new(CcountX, CcountY, FALSE); 
+
+      //--Create Top Widget to Display Score--//
+   TopWidget = gtk_label_new("Score");
+
+   //--Creates a New Table Object to Act as the ChessBoard--//
+   //--TRUE because tables is Homogeneous (All blocks are the Same Size)--//
+   BoardTable = gtk_table_new(XChessSquares, YChessSquares, TRUE);
+
+   //--Create Bottom Widget to Display Status--//
+   BottomWidget = gtk_label_new("Working");
+   
+
+   AttachWidgets(
+      MainFrame,
+      TopWidget,
+      BoardTable,
+      BottomWidget
+   );
+
+
+   //--Tests Window Layout w. Images--//
+   //TestLayout(MainFrame);
+
+
+
+
+
+  //GdkColor color;
+  //gdk_color_parse ("red", &color);
+  //gtk_widget_modify_fg (MainFrame, GTK_STATE_NORMAL, &color);
+
+
+
+
+
+
+   //-- Attach MainFrame table to the window--//
+   gtk_container_add(GTK_CONTAINER(TopWindow), MainFrame);
+
+   //--Show Window & Contents--//
+   gtk_widget_show_all(TopWindow);
+
+   gtk_main();
+
+
+
+   return 0;
+}
+
+
+//=====TopWindowSetup==================================================================// *TopWindowSetup*
+//--Applies Desired Properties (Dimensions, Title, Pos, ect.) to the main window--//
+int TopWindowSetup(GtkWidget *TopWindow) 
+{
+
+   //--Set the Window Title, Constant char Array--//
+   gtk_window_set_title(GTK_WINDOW(TopWindow), Window_Title);
+
+   //--Set the Window Size, (GTKWidget, Width, Height)--//
+   gtk_widget_set_size_request(TopWindow, Win_SizeX, Win_SizeY);
+
+   //--Make the Window not Realizable--//
+   gtk_window_set_resizable(GTK_WINDOW(TopWindow), Resizable);
+
+   //--Centers the Window--//
+   gtk_window_set_position(GTK_WINDOW(TopWindow), GTK_WIN_POS_CENTER);
+
+   //--CallBack -- Makes the program close when the 'X' is pressed--//
+   g_signal_connect_swapped(
+      G_OBJECT(TopWindow), 
+      "destroy", 
+      G_CALLBACK(gtk_main_quit), 
+      NULL
+   );
+}
+
+
+//=====AttachWidgets===================================================================// *AttachWidgets*
+//--Attaches Widgets to Window (MainFrame)--//
+int AttachWidgets(
+   GtkWidget *MainFrame, 
+   GtkWidget *TopWidget, 
+   GtkWidget *BoardTable, 
+   GtkWidget *BottomWidget
+)
+{
+   //--Set Object Sizes, and Properties--//
+   //--MainFrame--//
    gtk_widget_set_size_request(MainFrame, Win_SizeX, Win_SizeY);
+
+   //--Top Widget--//
+   gtk_widget_set_size_request(TopWidget, TopBannerX, TopBannerY);
+   gtk_label_set_justify(GTK_LABEL(TopWidget), GTK_JUSTIFY_CENTER);
+
+   //--BoardTable--//
+   gtk_widget_set_size_request(BoardTable, TableSizeX, TableSizeY);
+
+   //--Bottom Widget--//
+   gtk_widget_set_size_request(BottomWidget, BottomBannerX, BottomBannerY);
+   gtk_label_set_justify(GTK_LABEL(BottomWidget), GTK_JUSTIFY_CENTER);
 
 
    //--Attach Objects to MainFrame--//
@@ -132,10 +232,14 @@ int main(int argc, char *argv[]) {
       GTK_FILL, GTK_FILL, 
       0, 0
    );
+}
 
-   /* Test Layout with Images
-{  // These Brackets exist to enable hiding this segment of code in sublime (Text Editor)
-   Test Image Files Load Suff 
+
+//=====TestLayout======================================================================// *TestLayout*
+//--Tests window layout with color block images--//
+/*
+void TestLayout(GtkWidget *MainFrame)
+{
    GtkWidget *TopTestIMG, *BoardTestIMG, *BottomTestIMG;
 
    const string TopFN = ImgFolder + "tpbrd.png";
@@ -161,62 +265,4 @@ int main(int argc, char *argv[]) {
    gtk_table_attach(GTK_TABLE(MainFrame), TopTestIMG, TopWidgetXStart, TopWidgetXEnd, TopWidgetYStart, TopWidgetYEnd, GTK_FILL, GTK_FILL, 0, 0);
    gtk_table_attach(GTK_TABLE(MainFrame), BoardTestIMG, BoardXStart, BoardXEnd, BoardYStart, BoardYEnd, GTK_FILL, GTK_FILL, 0, 0);
    gtk_table_attach(GTK_TABLE(MainFrame), BottomTestIMG, BottomWidgetXStart, BottomWidgetXEnd, BottomWidgetYStart, BottomWidgetYEnd, GTK_FILL, GTK_FILL, 0, 0);
-}
-   */
-
-
-
-
-
-
-  //GdkColor color;
-  //gdk_color_parse ("red", &color);
-  //gtk_widget_modify_fg (MainFrame, GTK_STATE_NORMAL, &color);
-
-
-
-
-
-
-   //-- Attach MainFrame table to the window--//
-   gtk_container_add(GTK_CONTAINER(TopWindow), MainFrame);
-
-   //--Show Window & Contents--//
-   gtk_widget_show_all(TopWindow);
-
-   gtk_main();
-
-
-
-   return 0;
-}
-
-//compile with "g++ main.cpp -o out `pkg-config --cflags --libs gtk+-3.0`"
-// 2.0 if at school
-
-
-//=====TopWindowSetup==================================================================// *TopWindowSetup*
-//--Applies Desired Properties (Dimensions, Title, Pos, ect.) to the main window--//
-int TopWindowSetup(GtkWidget *TopWindow) 
-{
-
-   //--Set the Window Title, Constant char Array--//
-   gtk_window_set_title(GTK_WINDOW(TopWindow), Window_Title);
-
-   //--Set the Window Size, (GTKWidget, Width, Height)--//
-   gtk_widget_set_size_request(TopWindow, Win_SizeX, Win_SizeY);
-
-   //--Make the Window not Realizable--//
-   gtk_window_set_resizable(GTK_WINDOW(TopWindow), Resizable);
-
-   //--Centers the Window--//
-   gtk_window_set_position(GTK_WINDOW(TopWindow), GTK_WIN_POS_CENTER);
-
-   //--CallBack -- Makes the program close when the 'X' is pressed--//
-   g_signal_connect_swapped(
-      G_OBJECT(TopWindow), 
-      "destroy", 
-      G_CALLBACK(gtk_main_quit), 
-      NULL
-   );
-}
+} */
