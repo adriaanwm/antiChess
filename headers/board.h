@@ -13,8 +13,8 @@ class Board{
       Soldier *whiteDeadSoldier[16];
       Soldier *blackDeadSoldier[16];
 
-		//ascii
-		string square[8][8];
+      //ascii
+      string square[8][8];
 
       //add soldier to dead list
       bool removeSoldierFromBoard(int r, int c, string color);
@@ -23,6 +23,8 @@ class Board{
       Board();
       bool move(int r, int c, int nr, int nc, string cp);
 
+      //get whose turn it isn't
+      string opponent(string cp);
       //check if player is trying to move their own piece
       bool belongsToPlayer(string color, int r, int c);
       //check if the move is an attack (only checks of square is occupied)
@@ -30,11 +32,14 @@ class Board{
       //Perform attack
       bool performAttack(int r, int c, int nr, int nc);
       //check if player has any pieces that can attack
-      bool hasAvailableAttack();
+      bool hasAvailableAttack(string player);
       //perform move
       bool performMove(int r, int c, int nr, int nc);
 
       bool gameOver();
+
+      //checkForAvailableAttacks
+      bool hasAttackIsKing(int,int,string);
 
       //ascii
       void asciiSetup();

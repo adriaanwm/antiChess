@@ -21,3 +21,10 @@ bool Soldier::isValidMove(int r, int c, int nr, int nc){
 string Soldier::getAsciiName(){
 	return asciiName;
 }
+
+bool Soldier::isKing(){return true;}
+bool Soldier::isQueen(){return false;}
+bool Soldier::isPawn(){return false;}
+bool Soldier::isBishop(){return false;}
+bool Soldier::isRook(){return false;}
+bool Soldier::isKnight(){return false;}

@@ -15,12 +15,18 @@ class Soldier{
 		Soldier(string player);
 		~Soldier();
 
-		//bool isValidMoveDirection(int r, int c, int nr, int nc);
 		string getSquareName();
-		//bool isValidAttackDirection(int r,int c,int nr,int nc);
 		bool isValidAttack(int r, int c, int nr, int nc);
 		bool isValidMove(int r, int c, int nr, int nc);
 		string getColor();
+
+		//what kind of soldier?
+		bool isKing();
+		bool isQueen();
+		bool isPawn();
+		bool isBishop();
+		bool isRook();
+		bool isKnight();
 
 		//ascii
 		string getAsciiName();

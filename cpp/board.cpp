@@ -15,6 +15,12 @@ Board::Board(){
 
 }
 
+string Board::opponent(string cp){
+	if(cp == "w") return "b";
+	else return "w";
+	return "w";
+}
+
 bool Board::move(int r, int c, int nr, int nc, string cp){
 	if(r<0 || r>7 || c<0 || c>7 || nr<0 || nr>7 || nc<0 || nc>7) return false;
 
@@ -34,7 +40,7 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 	}
 	//if it is just a move
 	else{
-		if(hasAvailableAttack()) return false;
+		if(hasAvailableAttack(cp)) return false;
 		else{
 			//check if it's a valid move
 			if(soldier[r][c]->isValidMove(r,c,nr,nc)){
@@ -46,8 +52,6 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 	}
 	return false;
 }
-
-
 
 bool Board::belongsToPlayer(string color, int r, int c){
 	if(soldier[r][c] == NULL) return false;
@@ -82,7 +86,28 @@ bool Board::performMove(int r, int c, int nr, int nc){
 	return true;
 }
 
-bool Board::hasAvailableAttack(){
+bool Board::hasAvailableAttack(string player){
+
+	//check each piece belonging to current player for a possible attack
+	for(int i=0;i<8;i++){
+		for(int j=0;j<8;j++){
+			if(soldier[i][j] != NULL){
+				if(soldier[i][j]->getColor() == player){
+					if(soldier[i][j]->isKing()){
+						if(hasAttackIsKing(i,j,player)) return true;
+					}else if(soldier[i][j]->isPawn()){
+
+					}
+				}
+			}
+		}
+	}
+	//hasAttackVertical?
+	//hasAttackHorizontal?
+	//hasAttackDiagonal?
+	//hasAttackIsKnight?
+	//hasAttackIsKing?
+	//hasAttackIsPawn?
 	return false;
 }
 
@@ -111,6 +136,47 @@ bool Board::gameOver(){
 	if(whiteDeadSoldier[15]!=NULL || blackDeadSoldier[15]!=NULL){
 		return true;
 	}
+	return false;
+}
+
+bool Board::hasAttackIsKing(int r, int c, string player){
+	//check right column
+	if(c<7){
+		if(soldier[r][c+1] != NULL && soldier[r][c+1]->getColor() == opponent(player))
+			return true;
+		if(r<7){
+			if(soldier[r+1][c+1] != NULL && soldier[r+1][c+1]->getColor() == opponent(player))
+				return true;
+		} 
+		if(r>0){
+			if(soldier[r-1][c+1] != NULL && soldier[r-1][c+1]->getColor() == opponent(player))
+				return true;
+		}
+	}
+	//check center column
+	if(r<7){
+		if(soldier[r+1][c] != NULL && soldier[r+1][c]->getColor() == opponent(player))
+			return true;
+	}
+	if(r>0){
+		if(soldier[r-1][c] != NULL && soldier[r-1][c]->getColor() == opponent(player))
+			return true;
+	}
+
+	//check left column
+	if(c>0){
+		if(soldier[r][c-1] != NULL && soldier[r][c-1]->getColor() == opponent(player))
+			return true;
+		if(r<7){
+			if(soldier[r+1][c-1] != NULL && soldier[r+1][c-1]->getColor() == opponent(player))
+				return true;
+		}
+		if(r>0){
+			if(soldier[r-1][c-1] != NULL && soldier[r-1][c-1]->getColor() == opponent(player))
+				return true;
+		}
+	}
+
 	return false;
 }
 
