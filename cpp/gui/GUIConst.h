@@ -10,7 +10,7 @@ const int TableSizeY = 600;
 const int TableSizeX = 600;
 
 //--Width and Height of the top and bottom banner--//
-const int TopBannerY = 30;
+const int TopBannerY = 30; 
 const int TopBannerX = 600;
 const int BottomBannerY = 30;
 const int BottomBannerX = 600;
@@ -26,8 +26,14 @@ const int CcountY = 3;
 //--Is the Window Resizeable? False = No, because The gameboard doesn't scale--//
 const bool Resizable = false;
 
-//--Window Title--//
+//===Window Title, Names, and Spaces===//
+
+//--Used as spacing between scores and other titles--//
+const char Spaces20[] = "                    ";
+
 const char Window_Title[] = "Anti-Chess";
+const char p1Name[] = "Player 1: ";
+const char p2Name[] = "Player 2: ";
 
 
 //===Object Positioning Constants===///
@@ -48,5 +54,11 @@ const int BottomWidgetXStart = 0;
 const int BottomWidgetXEnd = 1;
 const int BottomWidgetYStart = 4;
 const int BottomWidgetYEnd = 5;
+
+
+//===Colors===//
+char MEDIUMGREEN[] = "#078d07";
+
+
 
 #endif
