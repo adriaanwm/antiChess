@@ -28,7 +28,7 @@ class Board{
       //check if player is trying to move their own piece
       bool belongsToPlayer(string color, int r, int c);
       //check if the move is an attack (only checks of square is occupied)
-      bool isAttack(int r, int c);
+      bool isAttack(int r, int c, string cp);
       //Perform attack
       bool performAttack(int r, int c, int nr, int nc);
       //check if player has any pieces that can attack
@@ -40,6 +40,7 @@ class Board{
 
       //checkForAvailableAttacks
       bool hasAttackIsKing(int,int,string);
+      bool hasAttackIsKnight(int,int,string);
 
       //ascii
       void asciiSetup();

@@ -30,7 +30,7 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 	if(belongsToPlayer(cp, nr, nc))return false;
 	//check if it is an attack or just a move
 	//if it's an attack
-	if(isAttack(nr,nc)){
+	if(isAttack(nr,nc,cp)){
 		//check if it's a valid attack
 		if(soldier[r][c]->isValidAttack(r,c,nr,nc)){
 			//do the attack
@@ -59,8 +59,8 @@ bool Board::belongsToPlayer(string color, int r, int c){
 	return false;
 }
 
-bool Board::isAttack(int r, int c){
-	if(soldier[r][c] != NULL) return true;
+bool Board::isAttack(int r, int c, string cp){
+	if(soldier[r][c] != NULL && soldier[r][c]->getColor() == opponent(cp)) return true;
 	return false;
 }
 
@@ -95,8 +95,8 @@ bool Board::hasAvailableAttack(string player){
 				if(soldier[i][j]->getColor() == player){
 					if(soldier[i][j]->isKing()){
 						if(hasAttackIsKing(i,j,player)) return true;
-					}else if(soldier[i][j]->isPawn()){
-
+					}else if(soldier[i][j]->isKnight()){
+						if(hasAttackIsKnight(i,j,player)) return true;
 					}
 				}
 			}
@@ -142,37 +142,37 @@ bool Board::gameOver(){
 bool Board::hasAttackIsKing(int r, int c, string player){
 	//check right column
 	if(c<7){
-		if(soldier[r][c+1] != NULL && soldier[r][c+1]->getColor() == opponent(player))
+		if(isAttack(r,c+1,player))
 			return true;
 		if(r<7){
-			if(soldier[r+1][c+1] != NULL && soldier[r+1][c+1]->getColor() == opponent(player))
+			if(isAttack(r+1,c+1,player))
 				return true;
 		} 
 		if(r>0){
-			if(soldier[r-1][c+1] != NULL && soldier[r-1][c+1]->getColor() == opponent(player))
+			if(isAttack(r-1,c+1,player))
 				return true;
 		}
 	}
 	//check center column
 	if(r<7){
-		if(soldier[r+1][c] != NULL && soldier[r+1][c]->getColor() == opponent(player))
+		if(isAttack(r+1,c,player))
 			return true;
 	}
 	if(r>0){
-		if(soldier[r-1][c] != NULL && soldier[r-1][c]->getColor() == opponent(player))
+		if(isAttack(r-1,c,player))
 			return true;
 	}
 
 	//check left column
 	if(c>0){
-		if(soldier[r][c-1] != NULL && soldier[r][c-1]->getColor() == opponent(player))
+		if(isAttack(r,c-1,player))
 			return true;
 		if(r<7){
-			if(soldier[r+1][c-1] != NULL && soldier[r+1][c-1]->getColor() == opponent(player))
+			if(isAttack(r+1,c-1,player))
 				return true;
 		}
 		if(r>0){
-			if(soldier[r-1][c-1] != NULL && soldier[r-1][c-1]->getColor() == opponent(player))
+			if(isAttack(r-1,c-1,player))
 				return true;
 		}
 	}
@@ -180,6 +180,25 @@ bool Board::hasAttackIsKing(int r, int c, string player){
 	return false;
 }
 
+bool Board::hasAttackIsKnight(int r,int c,string player){
+	if(c>0){
+		if(r>1 && isAttack(r-2,c-1,player)) return true;
+		if(r<6 && isAttack(r+2,c-1,player)) return true;
+		if(c>1){
+			if(r>0 && isAttack(r-1,c-2,player)) return true;
+			if(r<7 && isAttack(r+1,c-2,player)) return true;
+		}
+	}
+	if(c<7){
+		if(r>1 && isAttack(r-2,c+1,player)) return true;
+		if(r<6 && isAttack(r+2,c+1,player)) return true;
+		if(c<6){
+			if(r>0 && isAttack(r-1,c+2,player)) return true;
+			if(r<7 && isAttack(r+1,c+2,player)) return true;
+		}
+	}
+	return false;
+}
 
 //ascii
 void Board::display(){
