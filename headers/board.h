@@ -42,6 +42,8 @@ class Board{
       bool hasAttackIsKing(int,int,string);
       bool hasAttackIsKnight(int,int,string);
       bool hasAttackIsPawn(int,int,string);
+      bool hasAttackStraight(int,int,string);
+      bool hasAttackDiagonal(int,int,string);
 
       //ascii
       void asciiSetup();

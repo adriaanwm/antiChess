@@ -99,13 +99,16 @@ bool Board::hasAvailableAttack(string player){
 						if(hasAttackIsKnight(i,j,player)) return true;
 					}else if(soldier[i][j]->isPawn()){
 						if(hasAttackIsPawn(i,j,player)) return true;
+					}else if(soldier[i][j]->isRook()){
+						if(hasAttackStraight(i,j,player)) return true;
+					}else if(soldier[i][j]->isBishop()){
+						if(hasAttackDiagonal(i,j,player)) return true;
 					}
 				}
 			}
 		}
 	}
-	//hasAttackVertical?
-	//hasAttackHorizontal?
+	//hasAttackStraight?
 	//hasAttackDiagonal?
 	//hasAttackIsKnight?
 	//hasAttackIsKing?
@@ -217,7 +220,77 @@ bool Board::hasAttackIsPawn(int r,int c,string player){
 	return false;
 }
 
+bool Board::hasAttackStraight(int r,int c, string player){
+	int temp;
+	//check right
+	if(r<7){
+		temp = r+1;
+		while(temp != 8 && soldier[temp][c] == NULL) temp++;
+		if(isAttack(temp,c,player)) return true;
+	}
+	//check left
+	if(r>0){
+		temp = r-1;
+		while(temp >=0 && soldier[temp][c] == NULL) temp--;
+		if(isAttack(temp,c,player)) return true;
+	}
+	if(c<7){
+		temp = c+1;
+		while(temp != 8 && soldier[r][temp] == NULL) temp++;
+		if(isAttack(r,temp,player)) return true;
+	}
+	if(c>0){
+		temp = c-1;
+		while(temp >= 0 && soldier[r][temp] == NULL) temp--;
+		if(isAttack(r,temp,player)) return true;
+	}
+	return false;
+}
 
+bool Board::hasAttackDiagonal(int r,int c,string player){
+	int t1, t2;
+
+	//top
+	if(r<7){
+		//topright
+		if(c<7){
+			t1 = r+1; t2 = c+1;
+			while(t1 != 8 && t2 != 8 && soldier[t1][t2] == NULL){
+				t1++; t2++;
+			}
+			if(isAttack(t1,t2,player)) return true;
+		}
+		//topleft
+		if(c>0){
+			t1 = r+1; t2 = c-1;
+			while(t1 != 8 && t2 != 8 && soldier[t1][t2] == NULL){
+				t1++; t2--;
+			}
+			if(isAttack(t1,t2,player)) return true;
+		}
+	}
+	//bottom
+	if(r>0){
+		//bottomright
+		if(c<7){
+			t1 = r-1; t2 = c+1;
+			while(t1 != 8 && t2 != 8 && soldier[t1][t2] == NULL){
+				t1--; t2++;
+			}
+			if(isAttack(t1,t2,player)) return true;
+		}
+		//bottomleft
+		if(c>0){
+			t1 = r-1; t2 = c-1;
+			while(t1 != 8 && t2 != 8 && soldier[t1][t2] == NULL){
+				t1--; t2--;
+			}
+			if(isAttack(t1,t2,player)) return true;
+		}
+	}
+
+	return false;
+}
 
 //ascii
 void Board::display(){

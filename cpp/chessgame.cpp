@@ -1,22 +1,22 @@
 #include "../headers/chessgame.h"
 #include "../cpp/helpers.cpp"
 #include <stdlib.h>
+#include <time.h>
 
 
 ChessGame::ChessGame(){
 	over = false;
 	startingPlayer();
 
-
 }
 
 void ChessGame::asciiPlay(){
 
-	Board board;
+	Board *board = new Board;
 
 	while(!over){
 		cout << "current player is: " << currentPlayer << endl;
-		board.display();
+		board->display();
 
 		string request = "which piece would you like to use?\n> ";
 		int piece[2];
@@ -26,13 +26,13 @@ void ChessGame::asciiPlay(){
 	   int newPosition[2];
 	   N::userSelectSquare(newPosition,request2);
 
-	   if(!board.move(piece[0],piece[1],newPosition[0],newPosition[1],currentPlayer)){
+	   if(!board->move(piece[0],piece[1],newPosition[0],newPosition[1],currentPlayer)){
 	   	cout << "invalid move" << endl;
 	   }else{
 	   	changePlayer();
 	   }
 
-	   if(board.gameOver()){
+	   if(board->gameOver()){
 	   	over = true;
 	   }
 
@@ -45,7 +45,11 @@ void ChessGame::guiPlay(){
 }
 
 void ChessGame::startingPlayer(){
-	if(rand()<0.5) currentPlayer = "w";
+	time_t t;
+	srand((unsigned) time(&t));
+	if(rand()%2+1==1){
+		currentPlayer = "w";
+	}
 	else currentPlayer = "b";
 	return;
 }
