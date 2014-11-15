@@ -1,3 +1,8 @@
+#GTK Package Confg
+gtkVer = 3.0
+GTKpack = `pkg-config --cflags --libs gtk+-$(gtkVer)`
+
+
 #compilation
 Compiler = g++
 CFlags = -Wall
@@ -11,14 +16,14 @@ TestPath = tests/unit_tests/
 
 all: antichess soldier_tests
 
-antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o
-	$(Compiler) $(CFlags) -o $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o
+antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o
+	$(Compiler) $(CFlags) -o $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o $(GTKpack)
 
 soldier_tests: $(ObjectPath)soldier.o $(ObjectPath)soldier_tests.o
 	$(Compiler) $(CFlags) -o $(ExPath)soldier_tests $(ObjectPath)soldier.o $(ObjectPath)soldier_tests.o
 
-$(ObjectPath)main.o: $(Cpp)main.cpp $(HeaderPath)chessgame.h $(HeaderPath)board.h $(HeaderPath)soldier.h
-	$(Compiler) -c $(Cpp)main.cpp -o $(ObjectPath)main.o
+$(ObjectPath)main.o: $(Cpp)main.cpp $(HeaderPath)chessgame.h $(HeaderPath)board.h $(HeaderPath)soldier.h 
+	$(Compiler) -c $(Cpp)main.cpp -o $(ObjectPath)main.o $(GTKpack)
 
 $(ObjectPath)chessgame.o: $(HeaderPath)chessgame.h $(Cpp)chessgame.cpp $(HeaderPath)board.h $(HeaderPath)soldier.h
 	$(Compiler) -c $(Cpp)chessgame.cpp -o $(ObjectPath)chessgame.o
@@ -31,6 +36,9 @@ $(ObjectPath)soldier.o: $(HeaderPath)soldier.h $(Cpp)soldier.cpp
 
 $(ObjectPath)soldier_tests.o: $(TestPath)soldier_tests.cpp $(HeaderPath)soldier.h
 	$(Compiler) -c $(TestPath)soldier_tests.cpp -o $(ObjectPath)soldier_tests.o
+
+$(ObjectPath)Window.o: $(HeaderPath)Window.h $(HeaderPath)GUIConst.h $(Cpp)Window.cpp
+	$(Compiler) -c $(Cpp)Window.cpp -o $(ObjectPath)Window.o $(GTKpack)
 
 
 clean:
