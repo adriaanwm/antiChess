@@ -11,7 +11,7 @@ TestPath = tests/unit_tests/
 
 all: antichess soldier_tests
 
-antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o
+antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o 
 	$(Compiler) $(CFlags) -o $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o
 
 soldier_tests: $(ObjectPath)soldier.o $(ObjectPath)soldier_tests.o
@@ -34,4 +34,4 @@ $(ObjectPath)soldier_tests.o: $(TestPath)soldier_tests.cpp $(HeaderPath)soldier.
 
 
 clean:
-	rm $(ExPath)antichess $(ExPath)soldier_tests $(ObjectPath)soldier_tests.o $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o
+	rm $(ExPath)antichess $(ExPath)soldier_tests $(ObjectPath)soldier_tests.o $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o 

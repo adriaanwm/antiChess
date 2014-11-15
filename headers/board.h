@@ -4,6 +4,7 @@
 #include <iostream>
 #include "../headers/board.h"
 #include "../headers/soldier.h"
+//#include "../headers/pawn.h"
 
 using namespace std;
 

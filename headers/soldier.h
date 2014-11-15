@@ -7,20 +7,41 @@ using namespace std;
 
 class Soldier{
 	private:
-		string color;
 		string asciiName;
 
+	protected:
+		string color;
 
 	public:
-		Soldier(string player);
+		Soldier(string player, string name);
 		~Soldier();
 
 		string getSquareName();
-		bool isValidAttack(int r, int c, int nr, int nc);
-		bool isValidMove(int r, int c, int nr, int nc);
+		virtual bool isValidAttack(int r, int c, int nr, int nc);
+		virtual bool isValidMove(int r, int c, int nr, int nc);
 		string getColor();
 
 		//what kind of soldier?
+		virtual bool isKing();
+		virtual bool isQueen();
+		virtual bool isPawn();
+		virtual bool isBishop();
+		virtual bool isRook();
+		virtual bool isKnight();
+
+		//ascii
+		string getAsciiName();
+
+
+};
+#endif
+
+#ifndef PAWN
+#define PAWN
+class Pawn: public Soldier{
+	public:
+		Pawn(string player);
+		~Pawn();
 		bool isKing();
 		bool isQueen();
 		bool isPawn();
@@ -28,11 +49,17 @@ class Soldier{
 		bool isRook();
 		bool isKnight();
 
-		//ascii
-		string getAsciiName();
-
+		bool isValidAttack(int r, int c, int nr, int nc);
+		bool isValidMove(int r, int c, int nr, int nc);
 
 };
-
-
 #endif
+
+
+
+
+
+
+
+
+

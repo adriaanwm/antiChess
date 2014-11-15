@@ -3,7 +3,7 @@
 
 int main(){
 	//Soldier(string player)
-	Soldier *testSoldier = new Soldier("w");
+	Soldier *testSoldier = new Soldier("w","s");
 	cout << "created soldier" << endl;
 
 	testSoldier->getColor();

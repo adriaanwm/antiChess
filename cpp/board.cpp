@@ -34,9 +34,9 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 		//check if it's a valid attack
 		if(soldier[r][c]->isValidAttack(r,c,nr,nc)){
 			//do the attack
-			performAttack(r,c,nr,nc);
+			if(performAttack(r,c,nr,nc)) return true;
+			return false;
 		}
-		return true;
 	}
 	//if it is just a move
 	else{
@@ -45,9 +45,9 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 			//check if it's a valid move
 			if(soldier[r][c]->isValidMove(r,c,nr,nc)){
 				//do the move
-				performMove(r,c,nr,nc);
+				if(performMove(r,c,nr,nc)) return true;
+				return false;
 			}
-			return true;
 		}
 	}
 	return false;
@@ -339,8 +339,8 @@ void Board::asciiSetup(){
 		}
 	}
 	for(int i=0;i<8;i++){
-		soldier[1][i] = new Soldier("w");
-		soldier[6][i] = new Soldier("b");
+		soldier[1][i] = new Pawn("w");
+		soldier[6][i] = new Pawn("b");
 	}
 	return;
 }
