@@ -328,20 +328,37 @@ void Board::asciiSetup(){
 
 	for(int i=0;i<8;i+=2){
 		for(int j=0;j<8;j+=2){
-			square[i][j] = WhiteSquare + WhiteSquare;
-			square[i][j+1] = BlackSquare + BlackSquare;
+			square[i][j] = BlackSquare + BlackSquare;
+			square[i][j+1] = WhiteSquare + WhiteSquare;
 		}
 	}
 	for(int i=1;i<8;i+=2){
 		for(int j=0;j<8;j+=2){
-			square[i][j] = BlackSquare + BlackSquare;
-			square[i][j+1] = WhiteSquare + WhiteSquare;
+			square[i][j] = WhiteSquare + WhiteSquare;
+			square[i][j+1] = BlackSquare + BlackSquare;
 		}
 	}
 	for(int i=0;i<8;i++){
 		soldier[1][i] = new Pawn("w");
 		soldier[6][i] = new Pawn("b");
 	}
+	soldier[0][0] = new Rook("w");
+	soldier[0][7] = new Rook("w");
+	soldier[0][1] = new Knight("w");
+	soldier[0][6] = new Knight("w");
+	soldier[0][2] = new Bishop("w");
+	soldier[0][5] = new Bishop("w");
+	soldier[0][3] = new Queen("w");
+	soldier[0][4] = new King("w");
+
+	soldier[7][0] = new Rook("b");
+	soldier[7][7] = new Rook("b");
+	soldier[7][1] = new Knight("b");
+	soldier[7][6] = new Knight("b");
+	soldier[7][2] = new Bishop("b");
+	soldier[7][5] = new Bishop("b");
+	soldier[7][3] = new Queen("b");
+	soldier[7][4] = new King("b");
 	return;
 }
 
