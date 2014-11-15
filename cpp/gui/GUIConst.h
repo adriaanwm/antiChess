@@ -1,6 +1,8 @@
 #ifndef GUICONST_H
 #define GUICONST_H
 
+#include <gtk/gtk.h>
+
 
 //====CONSTANTS FOR WINDOW DIMENSIONS & SETTINGS====///
 
@@ -19,12 +21,10 @@ const int BottomBannerX = 600;
 const int Win_SizeX = TableSizeX + (TopBannerX - TableSizeX) + (BottomBannerX - TableSizeX);
 const int Win_SizeY = TableSizeY + TopBannerY + BottomBannerY;
 
-//--Number of Vertical Containers, (ChessBoard, TopBanner, BottomBanner)--//
-const int CcountX = 1;
-const int CcountY = 3;
 
 //--Is the Window Resizeable? False = No, because The gameboard doesn't scale--//
 const bool Resizable = false;
+
 
 //===Window Title, Names, and Spaces===//
 
@@ -37,6 +37,10 @@ const char p2Name[] = "Player 2: ";
 
 
 //===Object Positioning Constants===///
+
+//--Number of Vertical Containers, (ChessBoard, TopBanner, BottomBanner)--//
+const int CcountX = 1;
+const int CcountY = 3;
 
 //--Main Table Span Properties--//
 //-Can not overlap, this will cause a segmentation fault--//
@@ -59,6 +63,11 @@ const int BottomWidgetYEnd = 5;
 //===Colors===//
 char MEDIUMGREEN[] = "#078d07";
 
-
+struct Score
+{
+	int p1;
+	int p2;
+	GtkWidget *ScoreBar;
+};
 
 #endif

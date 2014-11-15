@@ -68,7 +68,10 @@ int AttachWidgets(
 );
 
 //--Updates the Score at the top of the window--//
-int UpdateScoreBanner(GtkWidget *ScoreBanner, int p1Score, int p2Score);
+int UpdateScoreBanner(GtkWidget* Passed, Score *Scores);
+
+//--Attaches Event Boxes to chess board--//
+int AttachEventBoxes(GtkWidget *ChessBoard, GtkWidget *EventBoxes[]);
 
 
 int DrawBoard();
@@ -95,7 +98,16 @@ int main(int argc, char *argv[]) {
       *EventBoxes[TotalSquares]
    ;
 
-   int p1Score = 0, p2Score = 0;
+   Score *PlayerScores = new Score;
+   if (PlayerScores == NULL) {
+     // ErrorPopup(MEMORYERROR);
+      cout << "Memeory Error" << endl;
+      return 0;
+   } else {
+      PlayerScores->p1 = 0;
+      PlayerScores->p2 = 0;
+      PlayerScores->ScoreBar = TopWidget;
+   }
 
    //--Creates New GTK window Object--//
    TopWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -117,10 +129,25 @@ int main(int argc, char *argv[]) {
    BottomWidget = gtk_label_new("Working");
 
    //--Create new Event Boxes for the Chess Board--//
-   for (int p = 0; p <= TotalSquares; p++) {
+   for (int p = 0; p <= TotalSquares - 1; p++) {
       EventBoxes[p] = gtk_event_box_new();
-      //EventBoxes[p] = 
+      gtk_widget_set_size_request(EventBoxes[p], 
+         (TableSizeX / XChessSquares), 
+         (TableSizeY / YChessSquares)
+      );
+
+      g_signal_connect_swapped(
+         G_OBJECT(EventBoxes[p]), 
+         "button_press_event", 
+         G_CALLBACK(gtk_main_quit), 
+         NULL
+      );   
    }
+
+   AttachEventBoxes(BoardTable, EventBoxes);
+
+               //--Tests Window Layout w. Images--//
+               //TestLayout(MainFrame);
 
    AttachWidgets(
       MainFrame,
@@ -129,21 +156,17 @@ int main(int argc, char *argv[]) {
       BottomWidget
    );
 
-   UpdateScoreBanner(TopWidget, p1Score, p2Score);
+   //UpdateScoreBanner(TopWindow, TopWidget, p1Score, p2Score);
+
+
+   //if (LoadImages() == intFAILBIT) {
+   //   ErrorPopup(ImageLoadError);
+   //   return 0;
+   //}
 
 
 
-   //--Tests Window Layout w. Images--//
-   //TestLayout(MainFrame);
 
-
-
-
-
-
-   GdkColor WorkingGreen;
-   gdk_color_parse (MEDIUMGREEN, &WorkingGreen);
-   gtk_widget_modify_fg (BottomWidget, GTK_STATE_NORMAL, &WorkingGreen);
 
 
    //-- Attach MainFrame table to the window--//
@@ -190,6 +213,7 @@ int TopWindowSetup(GtkWidget *TopWindow)
       G_CALLBACK(gtk_main_quit), 
       NULL
    );
+   return 0;
 }
 
 
@@ -217,6 +241,10 @@ int AttachWidgets(
    gtk_widget_set_size_request(BottomWidget, BottomBannerX, BottomBannerY);
    gtk_label_set_justify(GTK_LABEL(BottomWidget), GTK_JUSTIFY_FILL);
 
+   //--Creates a Green Color for Text--//
+   GdkColor WorkingGreen;
+   gdk_color_parse (MEDIUMGREEN, &WorkingGreen);
+   gtk_widget_modify_fg (BottomWidget, GTK_STATE_NORMAL, &WorkingGreen);
 
    //--Attach Objects to MainFrame--//
    gtk_table_attach(
@@ -254,16 +282,77 @@ int AttachWidgets(
    return 0;
 }
 
+//=====AttachEventBoxes================================================================// *AttachEventBoxes*
+//--Attaches Event Boxes to chess board--//
+int AttachEventBoxes(GtkWidget *ChessBoard, GtkWidget *EventBoxes[])
+{
+   GdkColor Black;
+   gdk_color_parse ("#FFFFFF", &Black);
+
+   GdkColor White;
+   gdk_color_parse ("#000000", &White);
+
+   int Printed = 0;
+
+   int X_Start= 0;
+   int X_End = 1;
+
+   int Y_Start = 0;
+   int Y_End = 1;
+
+   for (int i = 0; i < TotalSquares; i++) {
+      gtk_table_attach(
+         GTK_TABLE(ChessBoard), 
+         EventBoxes[i],
+         X_Start,
+         X_End, 
+         Y_Start,
+         Y_End,
+         GTK_FILL, GTK_FILL,
+         0, 0
+      );
+
+      if (((Printed % 2) != 0)) {
+         gtk_widget_modify_bg (EventBoxes[i], GTK_STATE_NORMAL, &White);
+      } else {
+         gtk_widget_modify_bg (EventBoxes[i], GTK_STATE_NORMAL, &Black);
+      }
+
+      X_Start = X_End;
+      X_End = X_Start + 1;
+
+      if ((((i + 1) % 8) == 0) && (i > 2)) {
+         Y_Start = Y_End;
+         Y_End = Y_Start + 1;
+
+         X_Start = 0;
+         X_End = 1;
+         //Printed++;
+      } else {
+         Printed++;
+      }
+
+   }
+}
+
 //=====UpdateScoreBanner===============================================================// *UpdateScoreBanner*
 //--Updates the Score at the top of the window--//
-int UpdateScoreBanner(GtkWidget *ScoreBanner, int p1Score, int p2Score) 
+int UpdateScoreBanner(GtkWidget* Passed, Score *Scores)
 {
+   int p1Score = Scores->p1;
+   int p2Score = Scores->p2;
    //--Combined Names, and Scores--//
    stringstream tempStream;
    tempStream << p1Name << p1Score << Spaces20 << p2Name << p2Score;
 
    //--Set Score Banner--//
-   gtk_label_set_text (GTK_LABEL(ScoreBanner), tempStream.str().c_str());
+   gtk_label_set_text (GTK_LABEL(Scores->ScoreBar), tempStream.str().c_str());
+   cout << "LOL";
+
+   Scores->p1++;
+   Scores->p2++;
+
+   return 0;
 }
 
 

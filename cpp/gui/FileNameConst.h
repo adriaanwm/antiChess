@@ -4,6 +4,11 @@
 #include <string>
 
 //===FileName Constants===//
-const std::string ImgFolder = "res/";
+//--Resources Folder--//
+const std::string ImgFolder = "res/"; 
+
+//--App Icon--//
+const std::string AppIco = ImgFolder + "icon.png"; 
+
 
 #endif
