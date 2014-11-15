@@ -1,7 +1,7 @@
 #ifndef GUICONST_H
 #define GUICONST_H
 
-#include <gtk/gtk.h>
+
 
 
 //====CONSTANTS FOR WINDOW DIMENSIONS & SETTINGS====///
@@ -61,13 +61,9 @@ const int BottomWidgetYEnd = 5;
 
 
 //===Colors===//
-char MEDIUMGREEN[] = "#078d07";
+const char MEDIUMGREEN[] = "#0099CC";
+const char DarkSquare[] = "#263026";
+const char LightSquare[] = "#d0d0d0";
 
-struct Score
-{
-	int p1;
-	int p2;
-	GtkWidget *ScoreBar;
-};
 
 #endif

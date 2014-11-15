@@ -32,6 +32,8 @@
 //--Includes the filenames of Images and Folders for resources--//
 #include "FileNameConst.h"
 
+#include "scores.h"
+
 //=====NAMESPACES======================================================================//
 using namespace std;
 
@@ -43,6 +45,8 @@ using namespace std;
 const int XChessSquares = 8;
 const int YChessSquares = 8;
 const int TotalSquares = (XChessSquares * YChessSquares);
+
+const int NumberOfChessUnits = 32;
 
 
 
@@ -57,7 +61,7 @@ int TopWindowSetup(GtkWidget *TopWindow);
 //void TestLayout(GtkWidget *MainFrame);
 
 //--Loads Images, Checks for Errors while Loading
-int LoadImages();
+int LoadImages(GtkWidget *EventBoxes[]);
 
 //--Attaches Widgets to Window (MainFrame)--//
 int AttachWidgets(
@@ -68,7 +72,7 @@ int AttachWidgets(
 );
 
 //--Updates the Score at the top of the window--//
-int UpdateScoreBanner(GtkWidget* Passed, Score *Scores);
+int UpdateScoreBanner(GtkWidget* Passed, scoreObject *Scores);
 
 //--Attaches Event Boxes to chess board--//
 int AttachEventBoxes(GtkWidget *ChessBoard, GtkWidget *EventBoxes[]);
@@ -81,32 +85,31 @@ int DrawBoard();
 //=====MAIN ROUTIENE===================================================================//
 int main(int argc, char *argv[]) {
 
+   string p1Name, p2Name;
+
    gtk_init(&argc, &argv);
 
    GtkWidget 
       *TopWindow,    //--Main Window Container--//
       *MainFrame,    //--Table to hold all the contents of the window--//
       *BoardTable,   //--Chessboard Table--//
-      *TopWidget,    //--Top Text box for Score--// 
+      //*TopWidget,    //--Top Text box for Score--// 
       *BottomWidget, //--Bottom for status--//
       *AppIcon,
-      *BlackPIX,     
-      *WhitePIX,
-      *UnitPIX,
+      *UnitPIX[NumberOfChessUnits],
       *WhiteBoardSquare[(TotalSquares/2)],
       *BlackBoardSquare[(TotalSquares/2)],
       *EventBoxes[TotalSquares]
    ;
 
-   Score *PlayerScores = new Score;
-   if (PlayerScores == NULL) {
+   scoreObject *Scores = new scoreObject;
+   if (Scores == NULL) {
      // ErrorPopup(MEMORYERROR);
       cout << "Memeory Error" << endl;
       return 0;
    } else {
-      PlayerScores->p1 = 0;
-      PlayerScores->p2 = 0;
-      PlayerScores->ScoreBar = TopWidget;
+      Scores->SetP1Name(p1Name);
+      Scores->SetP2Name(p2Name);
    }
 
    //--Creates New GTK window Object--//
@@ -123,35 +126,26 @@ int main(int argc, char *argv[]) {
    BoardTable = gtk_table_new(XChessSquares, YChessSquares, TRUE);
 
    //--Create Top Widget to Display Score--//
-   TopWidget = gtk_label_new("Error!");
+   Scores->ScoreBar = gtk_label_new("Error!");
 
    //--Create Bottom Widget to Display Status--//
    BottomWidget = gtk_label_new("Working");
 
    //--Create new Event Boxes for the Chess Board--//
    for (int p = 0; p <= TotalSquares - 1; p++) {
-      EventBoxes[p] = gtk_event_box_new();
-      gtk_widget_set_size_request(EventBoxes[p], 
-         (TableSizeX / XChessSquares), 
-         (TableSizeY / YChessSquares)
-      );
-
-      g_signal_connect_swapped(
-         G_OBJECT(EventBoxes[p]), 
-         "button_press_event", 
-         G_CALLBACK(gtk_main_quit), 
-         NULL
-      );   
+      EventBoxes[p] = gtk_event_box_new(); 
    }
 
    AttachEventBoxes(BoardTable, EventBoxes);
+
+   LoadImages(EventBoxes);
 
                //--Tests Window Layout w. Images--//
                //TestLayout(MainFrame);
 
    AttachWidgets(
       MainFrame,
-      TopWidget,
+      Scores->ScoreBar,
       BoardTable,
       BottomWidget
    );
@@ -287,10 +281,10 @@ int AttachWidgets(
 int AttachEventBoxes(GtkWidget *ChessBoard, GtkWidget *EventBoxes[])
 {
    GdkColor Black;
-   gdk_color_parse ("#FFFFFF", &Black);
+   gdk_color_parse (DarkSquare, &Black);
 
    GdkColor White;
-   gdk_color_parse ("#000000", &White);
+   gdk_color_parse (LightSquare, &White);
 
    int Printed = 0;
 
@@ -312,7 +306,19 @@ int AttachEventBoxes(GtkWidget *ChessBoard, GtkWidget *EventBoxes[])
          0, 0
       );
 
-      if (((Printed % 2) != 0)) {
+      gtk_widget_set_size_request(EventBoxes[i], 
+         (TableSizeX / XChessSquares), 
+         (TableSizeY / YChessSquares)
+      );
+
+      g_signal_connect_swapped(
+         G_OBJECT(EventBoxes[i]), 
+         "button_press_event", 
+         G_CALLBACK(gtk_main_quit), 
+         NULL
+      );  
+
+      if (((Printed % 2) == 0)) {
          gtk_widget_modify_bg (EventBoxes[i], GTK_STATE_NORMAL, &White);
       } else {
          gtk_widget_modify_bg (EventBoxes[i], GTK_STATE_NORMAL, &Black);
@@ -335,22 +341,39 @@ int AttachEventBoxes(GtkWidget *ChessBoard, GtkWidget *EventBoxes[])
    }
 }
 
+//=====LoadImages======================================================================// *LoadImages*
+//--Loads Images, Checks for Errors while Loading
+int LoadImages(GtkWidget *EventBoxes[])
+{
+
+
+
+   GtkWidget* TestImage;
+
+
+
+   TestImage = gtk_image_new_from_file(testimg.c_str());
+
+   gtk_container_add (GTK_CONTAINER(EventBoxes[1]), TestImage);
+}
+
+
 //=====UpdateScoreBanner===============================================================// *UpdateScoreBanner*
 //--Updates the Score at the top of the window--//
-int UpdateScoreBanner(GtkWidget* Passed, Score *Scores)
+int UpdateScoreBanner(GtkWidget* Passed, scoreObject *Scores)
 {
-   int p1Score = Scores->p1;
-   int p2Score = Scores->p2;
-   //--Combined Names, and Scores--//
+    //--Combined Names, and Scores--//
    stringstream tempStream;
-   tempStream << p1Name << p1Score << Spaces20 << p2Name << p2Score;
+   tempStream << Scores->GetP1Name() 
+              << Scores->GetP1Score() 
+              << Spaces20 
+              << Scores->GetP2Name() 
+              << Scores->GetP2Score();
 
    //--Set Score Banner--//
    gtk_label_set_text (GTK_LABEL(Scores->ScoreBar), tempStream.str().c_str());
    cout << "LOL";
 
-   Scores->p1++;
-   Scores->p2++;
 
    return 0;
 }
