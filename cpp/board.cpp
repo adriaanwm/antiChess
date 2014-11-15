@@ -76,7 +76,7 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 		if(hasAvailableAttack(cp)) return false;
 		else{
 			//check if it's a valid move
-			if(soldier[r][c]->isValidMove(r,c,nr,nc)){
+			if(soldier[nr][nc] == NULL && soldier[r][c]->isValidMove(r,c,nr,nc)){
 				//do the move
 				if(soldier[r][c]->isQueen()){
 					if(isStraight(r,c,nr,nc)){
@@ -395,38 +395,38 @@ bool Board::emptyStraightLane(int r, int c, int nr, int nc){
 	if(r == nr){
 		if(c>nc){
 			t = c-1;
-			do{
+			while(soldier[t][c] == NULL){
 				if(t == nc+1) return true;
 				t--;
-			}while(soldier[r][t] == NULL);
+			}
 			return false;
 		}
 		if(nc>c){
 			t = c+1;
-			do{
+			while(soldier[t][c] == NULL){
 				if(t == nc-1) return true;
 				t++;
-			}while(soldier[r][t] == NULL);
+			}
 			return false;
 		}
 	}
 	if(c == nc){
 		if(r>nr){
 			t = r-1;
-			do{
+			while(soldier[t][c] == NULL){
 				cout << "t " << t << endl;
 				cout << "r " << nr << endl;
 				if(t == nr+1) return true;
 				t--;
-			}while(soldier[t][c] == NULL);
+			}
 			return false;
 		}
 		if(nr>r){
 			t = r+1;
-			do{
+			while(soldier[t][c] == NULL){
 				if(t == nr-1) return true;
 				t++;
-			}while(soldier[t][c] == NULL);
+			}
 			return false;
 		}
 	}
@@ -440,19 +440,19 @@ bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
 		//topright
 		if(c<nc){
 			t1 = r+1; t2 = c+1;
-			do{
+			while(soldier[t1][t2] == NULL){
 				if(t1 == nr-1) return true;
 				t1++; t2++;
-			}while(soldier[t1][t2] == NULL);
+			}
 			return false;
 		}
 		//topleft
 		if(c>nc){
 			t1 = r+1; t2 = c-1;
-			do{
+			while(soldier[t1][t2] == NULL){
 				if(t1 == nr-1) return true;
 				t1++; t2--;
-			}while(soldier[t1][t2] == NULL);
+			}
 			return false;
 		}
 	}
@@ -461,19 +461,19 @@ bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
 		//bottomright
 		if(c<nc){
 			t1 = r-1; t2 = c+1;
-			do{
+			while(soldier[t1][t2] == NULL){
 				if(t1==nr+1) return true;
 				t1--; t2++;
-			}while(soldier[t1][t2] == NULL);
+			}
 			return false;
 		}
 		//bottomleft
 		if(c>nc){
 			t1 = r-1; t2 = c-1;
-			do{
+			while(soldier[t1][t2] == NULL){
 				if(t1==nr+1) return true;
 				t1--; t2--;
-			}while(soldier[t1][t2] == NULL);
+			}
 			return false;
 		}
 	}	
