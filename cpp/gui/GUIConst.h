@@ -61,7 +61,7 @@ const int BottomWidgetYEnd = 5;
 
 
 //===Colors===//
-const char MEDIUMGREEN[] = "#0099CC";
+const char MEDIUMGREEN[] = "#0099CC"; //--Like in the Food's industry, green is a blue--//
 const char DarkSquare[] = "#263026";
 const char LightSquare[] = "#d0d0d0";
 
