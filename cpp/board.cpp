@@ -76,9 +76,7 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 		if(hasAvailableAttack(cp)) return false;
 		else{
 			//check if it's a valid move
-			cout << "three" << endl;
 			if(soldier[r][c]->isValidMove(r,c,nr,nc)){
-				cout << "four" << endl;
 				//do the move
 				if(soldier[r][c]->isQueen()){
 					if(isStraight(r,c,nr,nc)){
@@ -96,11 +94,8 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 						return false;
 					}
 				}else if(soldier[r][c]->isRook()){
-					cout << "one" << endl;
 					if(isStraight(r,c,nr,nc)){
-						cout << "two" << endl;
 						if(emptyStraightLane(r, c, nr, nc)){
-							cout << "three" << endl;
 							if(performMove(r,c,nr,nc)) return true;
 							return false;
 						}
@@ -166,36 +161,36 @@ bool Board::hasAvailableAttack(string player){
 				if(soldier[i][j]->getColor() == player){
 					if(soldier[i][j]->isKing()){
 						if(hasAttackIsKing(i,j,player)){
-							cout << soldier[i][j]->getAsciiName() << " has an attack";
+							cout << soldier[i][j]->getAsciiName() << " has an attack" << endl;
 							return true;
 						}
 					}else if(soldier[i][j]->isKnight()){
 						if(hasAttackIsKnight(i,j,player)){
-							cout << soldier[i][j]->getAsciiName() << " has an attack";
+							cout << soldier[i][j]->getAsciiName() << " has an attack"<< endl;
 							return true;
 						}
 					}else if(soldier[i][j]->isPawn()){
 						if(hasAttackIsPawn(i,j,player)){
-							cout << soldier[i][j]->getAsciiName() << " has an attack";
+							cout << soldier[i][j]->getAsciiName() << " has an attack"<< endl;
 							return true;
 						}
 					}else if(soldier[i][j]->isRook()){
 						if(hasAttackStraight(i,j,player)){
-							cout << soldier[i][j]->getAsciiName() << " has an attack";
+							cout << soldier[i][j]->getAsciiName() << " has an attack"<< endl;
 							return true;
 						}
 					}else if(soldier[i][j]->isBishop()){
 						if(hasAttackDiagonal(i,j,player)){
-							cout << soldier[i][j]->getAsciiName() << " has an attack";
+							cout << soldier[i][j]->getAsciiName() << " has an attack"<< endl;
 							return true;
 						}
 					}else if(soldier[i][j]->isQueen()){
 						if(hasAttackStraight(i,j,player)){
-							cout << soldier[i][j]->getAsciiName() << " has an attack";
+							cout << soldier[i][j]->getAsciiName() << " has an attack"<< endl;
 							return true;
 						}
 						if(hasAttackDiagonal(i,j,player)){
-							cout << soldier[i][j]->getAsciiName() << " has an attack";
+							cout << soldier[i][j]->getAsciiName() << " has an attack"<< endl;
 							return true;
 						}
 					}
@@ -353,7 +348,9 @@ bool Board::hasAttackDiagonal(int r,int c,string player){
 			while(t1 != 8 && t2 != 8 && soldier[t1][t2] == NULL){
 				t1++; t2++;
 			}
-			if(isAttack(t1,t2,player)) return true;
+			if(t1 != 8 && t2 != 8){
+				if(isAttack(t1,t2,player)) return true;
+			}
 		}
 		//topleft
 		if(c>0){
@@ -361,7 +358,9 @@ bool Board::hasAttackDiagonal(int r,int c,string player){
 			while(t1 != 8 && t2 >= 0 && soldier[t1][t2] == NULL){
 				t1++; t2--;
 			}
-			if(isAttack(t1,t2,player)) return true;
+			if(t1 != 8 && t2 >= 0){
+				if(isAttack(t1,t2,player)) return true;
+			}
 		}
 	}
 	//bottom
@@ -372,7 +371,9 @@ bool Board::hasAttackDiagonal(int r,int c,string player){
 			while(t1 >= 0 && t2 != 8 && soldier[t1][t2] == NULL){
 				t1--; t2++;
 			}
-			if(isAttack(t1,t2,player)) return true;
+			if(t1 >= 0 && t2 != 8){
+				if(isAttack(t1,t2,player)) return true;
+			}
 		}
 		//bottomleft
 		if(c>0){
@@ -380,7 +381,9 @@ bool Board::hasAttackDiagonal(int r,int c,string player){
 			while(t1 >=0 && t2 >= 0 && soldier[t1][t2] == NULL){
 				t1--; t2--;
 			}
-			if(isAttack(t1,t2,player)) return true;
+			if(t1 >=0 && t2 >= 0){
+				if(isAttack(t1,t2,player)) return true;
+			}
 		}
 	}
 
@@ -393,7 +396,7 @@ bool Board::emptyStraightLane(int r, int c, int nr, int nc){
 		if(c>nc){
 			t = c-1;
 			do{
-				if(t == nc) return true;
+				if(t == nc+1) return true;
 				t--;
 			}while(soldier[r][t] == NULL);
 			return false;
@@ -401,30 +404,27 @@ bool Board::emptyStraightLane(int r, int c, int nr, int nc){
 		if(nc>c){
 			t = c+1;
 			do{
-				if(t == nc) return true;
+				if(t == nc-1) return true;
 				t++;
 			}while(soldier[r][t] == NULL);
 			return false;
 		}
 	}
 	if(c == nc){
-		cout << "10" << endl;
 		if(r>nr){
-			cout << "11" << endl;
 			t = r-1;
 			do{
 				cout << "t " << t << endl;
 				cout << "r " << nr << endl;
-				if(t == nr) return true;
+				if(t == nr+1) return true;
 				t--;
 			}while(soldier[t][c] == NULL);
 			return false;
 		}
 		if(nr>r){
-			cout << "12" << endl;
 			t = r+1;
 			do{
-				if(t == nr) return true;
+				if(t == nr-1) return true;
 				t++;
 			}while(soldier[t][c] == NULL);
 			return false;
@@ -441,7 +441,7 @@ bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
 		if(c<nc){
 			t1 = r+1; t2 = c+1;
 			do{
-				if(t1 == nr) return true;
+				if(t1 == nr-1) return true;
 				t1++; t2++;
 			}while(soldier[t1][t2] == NULL);
 			return false;
@@ -450,7 +450,7 @@ bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
 		if(c>nc){
 			t1 = r+1; t2 = c-1;
 			do{
-				if(t1 == nr) return true;
+				if(t1 == nr-1) return true;
 				t1++; t2--;
 			}while(soldier[t1][t2] == NULL);
 			return false;
@@ -462,7 +462,7 @@ bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
 		if(c<nc){
 			t1 = r-1; t2 = c+1;
 			do{
-				if(t1==nr) return true;
+				if(t1==nr+1) return true;
 				t1--; t2++;
 			}while(soldier[t1][t2] == NULL);
 			return false;
@@ -471,7 +471,7 @@ bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
 		if(c>nc){
 			t1 = r-1; t2 = c-1;
 			do{
-				if(t1==nr) return true;
+				if(t1==nr+1) return true;
 				t1--; t2--;
 			}while(soldier[t1][t2] == NULL);
 			return false;
