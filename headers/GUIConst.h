@@ -1,8 +1,12 @@
 #ifndef GUICONST_H
 #define GUICONST_H
 
+//===GamePlay Constants===//
+const int XChessSquares = 8;
+const int YChessSquares = 8;
+const int TotalSquares = (XChessSquares * YChessSquares);
 
-
+const int NumberOfChessUnits = 32;
 
 //====CONSTANTS FOR WINDOW DIMENSIONS & SETTINGS====///
 
@@ -32,8 +36,8 @@ const bool Resizable = false;
 const char Spaces20[] = "                    ";
 
 const char Window_Title[] = "Anti-Chess";
-const char p1Name[] = "Player 1: ";
-const char p2Name[] = "Player 2: ";
+const char p1NameConst[] = "Player 1: ";
+const char p2NameConst[] = "Player 2: ";
 
 
 //===Object Positioning Constants===///

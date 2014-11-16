@@ -5,6 +5,8 @@
 
 using namespace std;
 
+//--THINGS DAVID WILL DO, MAKE SCORE WID INIT IN MAIN THEN PASS TO WINDOW SO NAMES--//
+
 int main(int argc, char *argv[]){
 
 	gtk_init(&argc, &argv);

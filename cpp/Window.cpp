@@ -1,17 +1,69 @@
 #include <gtk/gtk.h>
 #include <sstream>
+#include <iostream>
 
 #include "../headers/Window.h"
 #include "../headers/GUIConst.h"
+#include "../headers/ScoreWidget.h"
+#include "../headers/StatusWidget.h"
 
 using namespace std;
 
 Window::Window()
 {
+   MakeBoard();
+   MakeMainfr();
    SetUpWindow();
 
+   AttachContainers();
 }
 
+Window::~Window()
+{
+   cout << "Deleting Window Object";
+}
+
+void Window::AttachContainers()
+{
+   //--Attach Objects to MainFrame--//
+   gtk_table_attach(
+      GTK_TABLE(MainFrame), 
+      TopScore.GetWidget(), 
+      TopWidgetXStart, 
+      TopWidgetXEnd, 
+      TopWidgetYStart, 
+      TopWidgetYEnd, 
+      GTK_FILL, GTK_FILL, 
+      0, 0
+   );
+
+   gtk_table_attach(
+      GTK_TABLE(MainFrame), 
+      BoardTable, 
+      BoardXStart, 
+      BoardXEnd, 
+      BoardYStart, 
+      BoardYEnd, 
+      GTK_FILL, GTK_FILL, 
+      0, 0
+   );
+
+   gtk_table_attach(
+      GTK_TABLE(MainFrame), 
+      BottomStatus.GetWidget(), 
+      BottomWidgetXStart, 
+      BottomWidgetXEnd, 
+      BottomWidgetYStart, 
+      BottomWidgetYEnd, 
+      GTK_FILL, GTK_FILL, 
+      0, 0
+   ); 
+
+   //-- Attach MainFrame table to the window--//
+   gtk_container_add(GTK_CONTAINER(TopWindow), MainFrame);
+}
+
+//--Applies Desired Properties (Dimensions, Title, Pos ect.) to the main window--//
 void Window::SetUpWindow()
 {
    //--Create a Window title that forces the window title to be displayed on the left--//
@@ -51,7 +103,19 @@ void Window::MakeMainfr()
    //--FALSE because tables is not Homogeneous (Not all blocks are the same)--//
    MainFrame = gtk_table_new(CcountX, CcountY, FALSE); 
 
-   
+   //--Set Object Sizes, and Properties--//
+   //--MainFrame--//
+   gtk_widget_set_size_request(MainFrame, Win_SizeX, Win_SizeY);
+}
+
+void Window::MakeBoard() 
+{
+   //--Creates a New Table Object to Act as the ChessBoard--//
+   //--TRUE because tables is Homogeneous (All blocks are the Same Size)--//
+   BoardTable = gtk_table_new(XChessSquares, YChessSquares, TRUE);
+
+   //--BoardTable--//
+   gtk_widget_set_size_request(BoardTable, TableSizeX, TableSizeY);
 }
 
 GtkWidget* Window::GetTop() 
