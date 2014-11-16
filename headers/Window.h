@@ -7,9 +7,13 @@ class Window {
 
 private:
    GtkWidget *TopWindow;
+   GtkWidget *MainFrame;
 public:
    Window();
    ~Window() {};
+
+   void SetUpWindow();
+   void MakeMainfr();
 
    GtkWidget* GetTop();
 

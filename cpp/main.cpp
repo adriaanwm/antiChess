@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
 	gtk_main();
 
 
-	game.asciiPlay();
+	//game.asciiPlay();
 
 
 

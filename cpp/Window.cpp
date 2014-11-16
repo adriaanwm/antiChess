@@ -1,6 +1,5 @@
 #include <gtk/gtk.h>
 #include <sstream>
-#include <iostream>
 
 #include "../headers/Window.h"
 #include "../headers/GUIConst.h"
@@ -9,7 +8,12 @@ using namespace std;
 
 Window::Window()
 {
+   SetUpWindow();
 
+}
+
+void Window::SetUpWindow()
+{
    //--Create a Window title that forces the window title to be displayed on the left--//
    stringstream TempTitle;
    TempTitle << Window_Title;
@@ -40,8 +44,17 @@ Window::Window()
    );
 }
 
+void Window::MakeMainfr()
+{
+   //--Container Objects Must be Initialized Here, otherwise GTK will have errors--//
+   //--Creates the Main Container to house all the objects in the window--//
+   //--FALSE because tables is not Homogeneous (Not all blocks are the same)--//
+   MainFrame = gtk_table_new(CcountX, CcountY, FALSE); 
+
+   
+}
+
 GtkWidget* Window::GetTop() 
 {
-      cout << "Retunring Yop WIndow" << endl;
    return TopWindow;
 }
