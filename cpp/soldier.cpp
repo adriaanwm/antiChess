@@ -72,6 +72,8 @@ bool Rook::isRook(){return true;}
 bool Rook::isKnight(){return false;}
 
 bool Rook::isValidAttack(int r, int c, int nr, int nc){
+	if(r==nr && c==nc) return false;
+	if(r<0 | r>7 | c <0 | c > 7 | nr<0 | nr>7 | nc<0 | nc>7) return false;
 	if(c == nc){
 		if(nr<8 && nr>=0) return true;
 	}
@@ -126,6 +128,7 @@ bool Bishop::isRook(){return false;}
 bool Bishop::isKnight(){return false;}
 
 bool Bishop::isValidAttack(int r, int c, int nr, int nc){
+	if(r<0 | r>7 | c <0 | c > 7 | nr<0 | nr>7 | nc<0 | nc>7) return false;
 	if(abs(nc-c) == abs(nr-r) && nc != c && nr != r) return true;
 	return false;
 }
@@ -147,6 +150,8 @@ bool Queen::isRook(){return false;}
 bool Queen::isKnight(){return false;}
 
 bool Queen::isValidAttack(int r, int c, int nr, int nc){
+	if(r<0 | r>7 | c <0 | c > 7 | nr<0 | nr>7 | nc<0 | nc>7) return false;
+	if(r==nr && c==nc) return false;
 	//straight
 	if(abs(nc-c) == abs(nr-r) && nc != c && nr != r) return true;
 
@@ -176,6 +181,7 @@ bool King::isRook(){return false;}
 bool King::isKnight(){return false;}
 
 bool King::isValidAttack(int r, int c, int nr, int nc){
+	if(r==nr && c==nc) return false;
 
 	if(c-nc == 1){
 		if(c>0){

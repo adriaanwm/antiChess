@@ -9,7 +9,9 @@ ExPath = bin/
 Cpp = cpp/
 TestPath = tests/unit_tests/
 
-all: antichess soldier_tests
+all: antichess
+
+tests: soldier_tests
 
 antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o 
 	$(Compiler) $(CFlags) -o $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o

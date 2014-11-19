@@ -17,7 +17,7 @@ class Soldier{
 		Soldier(string player, string name);
 		~Soldier();
 
-		string getSquareName();
+		//string getSquareName();
 		virtual bool isValidAttack(int r, int c, int nr, int nc);
 		virtual bool isValidMove(int r, int c, int nr, int nc);
 		string getColor();
@@ -32,8 +32,6 @@ class Soldier{
 
 		//ascii
 		string getAsciiName();
-
-
 };
 
 class Pawn: public Soldier{
