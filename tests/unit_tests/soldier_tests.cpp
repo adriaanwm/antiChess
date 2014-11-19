@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main(){
-	cout << "SOLDIER TESTS **********" << endl;
+	cout << "*****SOLDIER TESTS*****" << endl;
 
 	int passingTests = 0;
 	int failingTests = 0;
@@ -16,8 +16,8 @@ int main(){
 	soldier[5] = new King("w");
 	soldier[6] = new Pawn("b"); //test one black pawn since pawns move differently depending on the color
 
-//COLOR AND NAME TESTS
-	cout << "running color and name tests" << endl;
+	//COLOR AND NAME TESTS
+	cout << "running color and name tests..." << endl;
 	//color
 	for(int i=0;i<6;i++){
 		if(soldier[i]->getColor() == "w") passingTests ++;
@@ -43,7 +43,7 @@ int main(){
 
 	
 	//ATTACK TESTS
-	cout << "running attack tests" << endl;
+	cout << "running attack tests..." << endl;
 	int testAttacks[14][4][4] =
 			{{{1,1,1,2},{1,1,2,1},{1,1,3,1},{1,0,2,-1}} // whitepawnfail
 			,{{1,1,2,2},{1,1,2,0},{6,2,7,1},{4,2,5,1}} //whitepawnpass
@@ -77,7 +77,7 @@ int main(){
 	}
 
 	//KIND OF SOLDIER TESTS
-	cout << "running Kind of Soldier Tests" << endl;
+	cout << "running kind-of-soldier tests..." << endl;
 	for(int i=0;i<7;i++){
 		if(i!=0 && i!=6){
 			if(soldier[i]->isPawn()){

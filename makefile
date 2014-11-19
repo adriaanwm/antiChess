@@ -9,7 +9,7 @@ ExPath = bin/
 Cpp = cpp/
 TestPath = tests/unit_tests/
 
-all: antichess
+all: antichess soldier_tests tests
 
 tests: soldier_tests
 
@@ -34,6 +34,8 @@ $(ObjectPath)soldier.o: $(HeaderPath)soldier.h $(Cpp)soldier.cpp
 $(ObjectPath)soldier_tests.o: $(TestPath)soldier_tests.cpp $(HeaderPath)soldier.h
 	$(Compiler) -c $(TestPath)soldier_tests.cpp -o $(ObjectPath)soldier_tests.o
 
+tests: 
+	./bin/soldier_tests
 
 clean:
 	rm $(ExPath)antichess $(ExPath)soldier_tests $(ObjectPath)soldier_tests.o $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o 
