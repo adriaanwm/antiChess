@@ -8,16 +8,20 @@ ObjectPath = obj/
 ExPath = bin/
 Cpp = cpp/
 TestPath = tests/unit_tests/
+Objects = $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o 
 
-all: antichess soldier_tests tests
+all: antichess soldier_tests board_tests tests
 
 tests: soldier_tests
 
-antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o 
-	$(Compiler) $(CFlags) -o $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o
+antichess: $(Objects)
+	$(Compiler) $(CFlags) -o $(ExPath)antichess $(Objects)
 
 soldier_tests: $(ObjectPath)soldier.o $(ObjectPath)soldier_tests.o
 	$(Compiler) $(CFlags) -o $(ExPath)soldier_tests $(ObjectPath)soldier.o $(ObjectPath)soldier_tests.o
+
+board_tests: $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)board_tests.o
+	$(Compiler) $(CFlags) -o $(ExPath)board_tests $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)board_tests.o
 
 $(ObjectPath)main.o: $(Cpp)main.cpp $(HeaderPath)chessgame.h $(HeaderPath)board.h $(HeaderPath)soldier.h
 	$(Compiler) -c $(Cpp)main.cpp -o $(ObjectPath)main.o
@@ -34,8 +38,12 @@ $(ObjectPath)soldier.o: $(HeaderPath)soldier.h $(Cpp)soldier.cpp
 $(ObjectPath)soldier_tests.o: $(TestPath)soldier_tests.cpp $(HeaderPath)soldier.h
 	$(Compiler) -c $(TestPath)soldier_tests.cpp -o $(ObjectPath)soldier_tests.o
 
+$(ObjectPath)board_tests.o: $(TestPath)board_tests.cpp $(HeaderPath)board.h $(HeaderPath)soldier.h
+	$(Compiler) -c $(TestPath)board_tests.cpp -o $(ObjectPath)board_tests.o
+
 tests: 
-	./bin/soldier_tests
+	./bin/soldier_tests 
+	./bin/board_tests
 
 clean:
-	rm $(ExPath)antichess $(ExPath)soldier_tests $(ObjectPath)soldier_tests.o $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o 
+	rm $(ExPath)antichess $(ExPath)soldier_tests $(ExPath)board_tests $(Objects) 

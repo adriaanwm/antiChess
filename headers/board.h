@@ -47,9 +47,10 @@ class Board{
       bool hasAttackStraight(int,int,string);
       bool hasAttackDiagonal(int,int,string);
 
-      //check if there are any pieces in the way of a move
+      //check if there are any pieces in the way of a move (up to but not including)
       bool emptyStraightLane(int r, int c, int nr, int nc);
       bool emptyDiagonalLane(int r, int c, int nr, int nc);
+      
       bool isStraight(int r, int c, int nr, int nc);
       bool isDiagonal(int r, int c, int nr, int nc);
 
