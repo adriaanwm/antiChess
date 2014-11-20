@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
 
 	Window MainWindow;
 
-    gtk_widget_show_all(MainWindow.GetTop());
+    gtk_widget_show_all(MainWindow.GetWidget());
 
  
 	gtk_main();

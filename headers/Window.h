@@ -31,7 +31,7 @@ public:
    Window();
    ~Window();
 
-   GtkWidget* GetTop();
+   GtkWidget* GetWidget();
 
 };
 

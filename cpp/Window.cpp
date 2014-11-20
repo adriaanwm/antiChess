@@ -9,6 +9,7 @@
 
 using namespace std;
 
+
 Window::Window()
 {
    MakeBoard();
@@ -118,7 +119,7 @@ void Window::MakeBoard()
    gtk_widget_set_size_request(BoardTable, TableSizeX, TableSizeY);
 }
 
-GtkWidget* Window::GetTop() 
+GtkWidget* Window::GetWidget() 
 {
    return TopWindow;
 }

@@ -7,6 +7,8 @@
 #include "../headers/ScoreWidget.h"
 #include "../headers/GUIConst.h"
 
+//--Think about inheriting names from TopWindow()--//
+
 using namespace std;
 
 //--Constructor--//
