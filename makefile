@@ -31,9 +31,9 @@ TestPath = tests/unit_tests/
 all: antichess soldier_tests
 	$(print) "$(bld) Make All$(cls)"
 
-antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o $(ObjectPath)StatusWidget.o $(ObjectPath)ScoreWidget.o
+antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o $(ObjectPath)StatusWidget.o $(ObjectPath)ScoreWidget.o $(ObjectPath)BoardWidget.o $(ObjectPath)EventBoxes.o
 	$(print) "$(bld) Make AntiChess$(cls)"
-	$(Compiler) $(CFlags) $(Outarg) $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o $(ObjectPath)StatusWidget.o $(ObjectPath)ScoreWidget.o $(GTKpack)
+	$(Compiler) $(CFlags) $(Outarg) $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o $(ObjectPath)StatusWidget.o $(ObjectPath)ScoreWidget.o $(ObjectPath)BoardWidget.o $(ObjectPath)EventBoxes.o $(GTKpack)
 
 soldier_tests: $(ObjectPath)soldier.o $(ObjectPath)soldier_tests.o
 	$(print) "$(bld) Make soldier tests$(cls)"	
@@ -62,14 +62,21 @@ $(ObjectPath)Window.o: $(HeaderPath)Window.h $(HeaderPath)GUIConst.h $(HeaderPat
 	$(print) "$(bld) Compiling Window.o$(cls)"
 	$(Compiler) $(PreCompArg) $(Src)Window.cpp $(Outarg) $(ObjectPath)Window.o $(GTKpack)
 
-$(ObjectPath)StatusWidget.o: $(HeaderPath)StatusWidget.h $(Src)StatusWidget.cpp
+$(ObjectPath)StatusWidget.o: $(HeaderPath)StatusWidget.h $(Src)StatusWidget.cpp $(HeaderPath)GUIConst.h
 	$(print) "$(bld) Compiling StatusWidget.o$(cls)"
 	$(Compiler) $(PreCompArg) $(Src)StatusWidget.cpp $(Outarg) $(ObjectPath)StatusWidget.o $(GTKpack)
 
-$(ObjectPath)ScoreWidget.o: $(HeaderPath)ScoreWidget.h $(Src)ScoreWidget.cpp
+$(ObjectPath)ScoreWidget.o: $(HeaderPath)ScoreWidget.h $(Src)ScoreWidget.cpp $(HeaderPath)GUIConst.h
 	$(print) "$(bld) Compiling ScoreWidget.o$(cls)"
 	$(Compiler) $(PreCompArg) $(Src)ScoreWidget.cpp $(Outarg) $(ObjectPath)ScoreWidget.o $(GTKpack)
 
+$(ObjectPath)BoardWidget.o: $(HeaderPath)BoardWidget.h $(HeaderPath)EventBoxes.h $(Src)BoardWidget.cpp $(HeaderPath)GUIConst.h
+	$(print) "$(bld) Compiling BoardWidget.o $(cls)"
+	$(Compiler) $(PreCompArg) $(Src)BoardWidget.cpp $(Outarg) $(ObjectPath)BoardWidget.o $(GTKpack) 
+
+$(ObjectPath)EventBoxes.o: $(HeaderPath)EventBoxes.h $(Src)EventBoxes.cpp $(HeaderPath)GUIConst.h 
+	$(print) "$(bld) Compiling EventBoxes.o$)(cls)"
+	$(Compiler) $(PreCompArg) $(Src)EventBoxes.cpp $(Outarg) $(ObjectPath)EventBoxes.o $(GTKpack)
 
 
 clean:

@@ -42,14 +42,21 @@ void ScoreWidget::ReDrawBanner()
 {
 	//--Combined Names, and Scores--//
 	stringstream tempStream;
-	tempStream << p1Name 
+	tempStream << p1Name << ": " 
 			  << p1Score
 			  << Spaces20 
-			  << p2Name
+			  << p2Name  << ": "
 			  << p2Score;
 
    //--Set Score Banner--//
    gtk_label_set_text (GTK_LABEL(ScoreBanner), tempStream.str().c_str());
+}
+
+void ScoreWidget::SetNames(string Name1, string Name2) 
+{
+	p1Name = Name1;
+	p2Name = Name2;
+	ReDrawBanner();
 }
 
 //--Return pointer to GTK Score Banner Widget--//

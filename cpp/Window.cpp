@@ -5,16 +5,18 @@
 #include "../headers/Window.h"
 #include "../headers/GUIConst.h"
 #include "../headers/ScoreWidget.h"
+#include "../headers/BoardWidget.h"
 #include "../headers/StatusWidget.h"
 
 using namespace std;
 
 
-Window::Window()
+Window::Window(string Name1, string Name2)
 {
-   MakeBoard();
    MakeMainfr();
    SetUpWindow();
+
+   TopScore.SetNames(Name1, Name2);
 
    AttachContainers();
 }
@@ -40,7 +42,7 @@ void Window::AttachContainers()
 
    gtk_table_attach(
       GTK_TABLE(MainFrame), 
-      BoardTable, 
+      Board.GetWidget(), 
       BoardXStart, 
       BoardXEnd, 
       BoardYStart, 
@@ -109,15 +111,7 @@ void Window::MakeMainfr()
    gtk_widget_set_size_request(MainFrame, Win_SizeX, Win_SizeY);
 }
 
-void Window::MakeBoard() 
-{
-   //--Creates a New Table Object to Act as the ChessBoard--//
-   //--TRUE because tables is Homogeneous (All blocks are the Same Size)--//
-   BoardTable = gtk_table_new(XChessSquares, YChessSquares, TRUE);
 
-   //--BoardTable--//
-   gtk_widget_set_size_request(BoardTable, TableSizeX, TableSizeY);
-}
 
 GtkWidget* Window::GetWidget() 
 {

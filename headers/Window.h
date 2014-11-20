@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 #include "../headers/ScoreWidget.h"
+#include "../headers/BoardWidget.h"
 #include "../headers/StatusWidget.h"
 
 
@@ -17,6 +18,7 @@ private:
    GtkWidget *BoardTable;
 
    ScoreWidget TopScore;
+   BoardWidget Board;
    StatusWidget BottomStatus;
 
    //--Applies Desired Properties (Dimensions, Title, Pos ect.) to the main window--//
@@ -24,11 +26,10 @@ private:
 
 
    void MakeMainfr();
-   void MakeBoard();
    void AttachContainers();
 
 public:
-   Window();
+   Window(std::string Name1, std::string Name2);
    ~Window();
 
    GtkWidget* GetWidget();

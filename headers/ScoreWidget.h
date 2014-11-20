@@ -19,6 +19,8 @@ private:
 public:
 	ScoreWidget();
 	~ScoreWidget();
+
+	void SetNames(std::string Name1, std::string Name2);
 	
 	//--Return pointer to GTK Score Banner Widget--//
 	GtkWidget* GetWidget();
