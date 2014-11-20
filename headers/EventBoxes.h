@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 #include "../headers/GUIConst.h"
+#include "../headers/board.h"
 
 class EventBoxes
 {
@@ -14,6 +15,8 @@ private:
 public:
 	EventBoxes();
 	~EventBoxes();
+
+	//void SetColor(GDK COLOR);
 
 	//--Return pointer to GTK Score Banner Widget--//
 	GtkWidget* GetWidget();

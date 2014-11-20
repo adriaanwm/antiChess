@@ -12,6 +12,7 @@ class BoardWidget
 private:
 	GtkWidget* BoardTable;
 	EventBoxes ChessSquare[XChessSquares][YChessSquares];
+	void AttachBoxes();
 
 public:
 	BoardWidget();

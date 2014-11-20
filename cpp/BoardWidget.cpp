@@ -17,6 +17,8 @@ BoardWidget::BoardWidget()
 
    //--BoardTable--//
    gtk_widget_set_size_request(BoardTable, TableSizeX, TableSizeY);
+
+   AttachBoxes();
 }
 
 
@@ -30,4 +32,15 @@ BoardWidget::~BoardWidget()
 GtkWidget* BoardWidget::GetWidget()
 {
 	return BoardTable;
+}
+
+void BoardWidget::AttachBoxes()
+{
+	int x = 0;
+	int y = 0;
+	do{
+		x++;
+		y++;
+
+	} while ((x < XChessSquares) && (y <= YChessSquares));
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "../headers/EventBoxes.h"
+#include "../headers/BoardWidget.h"
 #include "../headers/GUIConst.h"
 
 using namespace std;

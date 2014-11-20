@@ -75,7 +75,7 @@ $(ObjectPath)BoardWidget.o: $(HeaderPath)BoardWidget.h $(HeaderPath)EventBoxes.h
 	$(Compiler) $(PreCompArg) $(Src)BoardWidget.cpp $(Outarg) $(ObjectPath)BoardWidget.o $(GTKpack) 
 
 $(ObjectPath)EventBoxes.o: $(HeaderPath)EventBoxes.h $(Src)EventBoxes.cpp $(HeaderPath)GUIConst.h 
-	$(print) "$(bld) Compiling EventBoxes.o$)(cls)"
+	$(print) "$(bld) Compiling EventBoxes.o$)$(cls)"
 	$(Compiler) $(PreCompArg) $(Src)EventBoxes.cpp $(Outarg) $(ObjectPath)EventBoxes.o $(GTKpack)
 
 
