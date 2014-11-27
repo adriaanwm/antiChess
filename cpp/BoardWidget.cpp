@@ -38,9 +38,47 @@ void BoardWidget::AttachBoxes()
 {
 	int x = 0;
 	int y = 0;
-	do{
-		x++;
-		y++;
 
-	} while ((x < XChessSquares) && (y <= YChessSquares));
+	int x_Start = 0;
+	int x_End   = 1;
+
+	int y_Start = 0;
+	int y_End   = 1;
+
+	int Printed = 0;
+
+	while ((x < XChessSquares) && (y < YChessSquares)) {
+
+		ChessSquare[x][y].setCord(x,y);
+
+		cout << x << endl;
+		cout << y << endl;
+
+		gtk_table_attach(
+			GTK_TABLE(GTK_TABLE(BoardTable)), 
+			ChessSquare[x][y].GetWidget(), 
+			x_Start, 
+			x_End, 
+			y_Start, 
+			y_End, 
+			GTK_FILL, GTK_FILL, 
+			0, 0
+		);
+
+		x_Start = x_End;
+		x_End = x_Start + 1;
+
+		if ( (((x + 1) % XChessSquares) == 0) && (x > 2)) {
+			x_Start = 0;
+			x_End = 1;
+			x = 0;
+
+			y_Start = y_End;
+			y_End = y_Start + 1;
+			y++;
+		} else {
+			x++;	
+		}
+
+	};
 }

@@ -5,18 +5,22 @@
 
 #include "../headers/GUIConst.h"
 #include "../headers/board.h"
+//#include "../headers/board.h"
 
 class EventBoxes
 {
 
 private:
 	GtkWidget* Box;
+	Board* ChessBoardPtr;
+	int X_Value; 
+	int Y_Value;
 
 public:
 	EventBoxes();
 	~EventBoxes();
 
-	//void SetColor(GDK COLOR);
+	void setCord(int x, int y);
 
 	//--Return pointer to GTK Score Banner Widget--//
 	GtkWidget* GetWidget();

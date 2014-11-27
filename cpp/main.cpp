@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
 	//--ASCII Menu, gets names and passes to window object--//
 
 	gtk_init(&argc, &argv);
-	ChessGame game;
+	//ChessGame game;
 
 	Window MainWindow(Name1, Name2);
 

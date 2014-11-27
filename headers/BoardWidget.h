@@ -5,13 +5,16 @@
 
 #include "../headers/GUIConst.h"
 #include "../headers/EventBoxes.h"
+#include "../headers/ImageFiles.h"
 
 class BoardWidget
 {
 
 private:
 	GtkWidget* BoardTable;
+
 	EventBoxes ChessSquare[XChessSquares][YChessSquares];
+	//ImageFiles UnitPicture;
 	void AttachBoxes();
 
 public:
@@ -20,6 +23,8 @@ public:
 
 	//--Return pointer to GTK Score Banner Widget--//
 	GtkWidget* GetWidget();
+
+
 
 
 };
