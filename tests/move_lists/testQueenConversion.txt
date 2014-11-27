@@ -1,4 +1,4 @@
-starting with black, winner should be w
+starting with black, winner should be b
 
 6 0
 4 0

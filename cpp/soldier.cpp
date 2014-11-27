@@ -50,12 +50,12 @@ bool Pawn::isValidAttack(int r, int c, int nr, int nc){
 
 bool Pawn::isValidMove(int r, int c, int nr, int nc){
 	if(color == "w"){
-		if(nr < 8 && nr == r+1) return true;
-		if(r == 1 && nr == r+2) return true;
+		if(nr < 8 && nr == r+1 && c == nc) return true;
+		if(r == 1 && nr == r+2 && c == nc) return true;
 		return false;
 	}else{
-		if(nr >= 0 && nr == r-1) return true;
-		if(r ==6 && nr == r-2) return true;
+		if(nr >= 0 && nr == r-1 && c == nc) return true;
+		if(r ==6 && nr == r-2 && c == nc) return true;
 		return false;
 	}
 	return false;
