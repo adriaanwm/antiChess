@@ -61,6 +61,15 @@ bool Pawn::isValidMove(int r, int c, int nr, int nc){
 	return false;
 }
 
+bool Pawn::turnQueen(int r){
+	if(color == "w"){
+		if(r==7) return true;
+	}else if(color == "b"){
+		if(r==0) return true;
+	}
+	return false;
+}
+
 //Rook
 Rook::Rook(string player): Soldier(player, "r"){}
 
@@ -139,7 +148,6 @@ bool Bishop::isRook(){return false;}
 bool Bishop::isKnight(){return false;}
 
 bool Bishop::isValidAttack(int r, int c, int nr, int nc){
-	cout << "bishop is valid attack" << endl;
 	if(r<0 | r>7 | c<0 | c>7 | nr<0 | nr>7 | nc<0 | nc>7) return false;
 	if(abs(nc-c) == abs(nr-r) && nc != c && nr != r) return true;
 	return false;

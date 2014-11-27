@@ -30,6 +30,7 @@ class Soldier{
 		virtual bool isRook();
 		virtual bool isKnight();
 
+
 		//ascii
 		string getAsciiName();
 };
@@ -44,6 +45,9 @@ class Pawn: public Soldier{
 		bool isBishop();
 		bool isRook();
 		bool isKnight();
+
+
+		bool turnQueen(int r);
 
 		bool isValidAttack(int r, int c, int nr, int nc);
 		bool isValidMove(int r, int c, int nr, int nc);

@@ -38,8 +38,10 @@ class Board{
       //perform move
       bool performMove(int r, int c, int nr, int nc);
 
+      bool makeQueenIfNecessary(int r, int c, string player);
+
       bool gameOver();
-      bool stalemate();
+      //bool stalemate();
 
       string winner();
 
