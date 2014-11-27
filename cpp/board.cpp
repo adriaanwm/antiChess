@@ -32,16 +32,11 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 	//if it's an attack
 	if(isAttack(nr,nc,cp)){
 		//check if it's a valid attack
-		cout << "is attack" << endl;
 		if(soldier[r][c]->isValidAttack(r,c,nr,nc)){
-			cout << "is valid attack" << endl;
 			if(soldier[r][c]->isQueen()){
 				if(isStraight(r,c,nr,nc)){
-					cout << "is straight" << endl;
 					if(emptyStraightLane(r,c,nr,nc)){
-						cout << "has empty straight lane" << endl;
 						if(performAttack(r,c,nr,nc)) return true;
-						cout << "couldn't perform attack" << endl;
 						return false;
 					}
 					return false;
@@ -54,13 +49,9 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 					return false;
 				}
 			} else if(soldier[r][c]->isRook()){
-				cout << "is straight" << endl;
 				if(isStraight(r,c,nr,nc)){
-					cout << "is straight" << endl;
 					if(emptyStraightLane(r, c, nr, nc)){
-						cout << "has empty straight lane" << endl;
 						if(performAttack(r,c,nr,nc)) return true;
-						cout << "couldn't perform attack" << endl;
 						return false;
 					}
 				}
@@ -203,12 +194,10 @@ bool Board::hasAvailableAttack(string player){
 						}
 					}else if(soldier[i][j]->isQueen()){
 						if(hasAttackStraight(i,j,player)){
-							cout << "has attack straight" << endl;
 							cout << soldier[i][j]->getAsciiName() << " has an attack"<< endl;
 							return true;
 						}
 						if(hasAttackDiagonal(i,j,player)){
-							cout << "has attack diagonal" << endl;
 							cout << soldier[i][j]->getAsciiName() << " has an attack"<< endl;
 							return true;
 						}

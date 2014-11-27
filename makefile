@@ -53,4 +53,4 @@ tests:
 	./bin/chessgame_tests
 
 clean:
-	rm $(ExPath)antichess $(ExPath)soldier_tests $(ExPath)board_tests $(ExPath)chessgame $(Objects) $(ObjectPath)chessgame_tests.o $(ObjectPath)board_tests.o $(ObjectPath)soldier_tests.o
+	rm $(ExPath)antichess $(ExPath)soldier_tests $(ExPath)board_tests $(ExPath)chessgame_tests $(Objects) $(ObjectPath)chessgame_tests.o $(ObjectPath)board_tests.o $(ObjectPath)soldier_tests.o
