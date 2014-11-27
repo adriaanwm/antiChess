@@ -1,4 +1,13 @@
 #!/bin/bash          
 	echo *****RUNNING ASCIITESTS*****
-	./bin/antichess 
+	#./bin/antichess 
+	# while read p; do
+	# 	echo `$p \n`
+	# done <tests/testMoveList1
+	cat tests/testMoveList1 | while read line
+	do
+	   # do something with $line here
+	   echo $line | ./bin/antichess
+	done
+
 

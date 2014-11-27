@@ -39,6 +39,9 @@ class Board{
       bool performMove(int r, int c, int nr, int nc);
 
       bool gameOver();
+      bool stalemate();
+
+      string winner();
 
       //checkForAvailableAttacks
       bool hasAttackIsKing(int,int,string);

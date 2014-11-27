@@ -24,7 +24,7 @@ string Soldier::getAsciiName(){
 bool Soldier::isKing(){return false;}
 bool Soldier::isQueen(){return false;}
 bool Soldier::isPawn(){return false;}
-bool Soldier::isBishop(){return true;}
+bool Soldier::isBishop(){return false;}
 bool Soldier::isRook(){return false;}
 bool Soldier::isKnight(){return false;}
 
@@ -100,15 +100,26 @@ bool Knight::isRook(){return false;}
 bool Knight::isKnight(){return true;}
 
 bool Knight::isValidAttack(int r, int c, int nr, int nc){
-	if(nr>0 && nc>1 && nr == r-1 && nc == c-2) return true;
-	if(nr>1 && nc>0 && nr == r-2 && nc == c-1) return true;
-	if(nr>0 && nc<6 && nr == r-1 && nc == c+2) return true;
-	if(nr>1 && nc<7 && nr == r-2 && nc == c+1) return true;
-	if(nr<6 && nc>0 && nr == r+2 && nc == c-1) return true;
-	if(nr<7 && nc>1 && nr == r+1 && nc == c-2) return true;
-	if(nr<6 && nc>0 && nr == r+2 && nc == c-1) return true;
-	if(nr<7 && nc<6 && nr == r+1 && nc == c+2) return true;
-	if(nr<6 && nc<7 && nr == r+2 && nc == c+1) return true;
+	//return true;
+
+	if(nr == r-1 && nc == c-2) return true;
+	if(nr == r-2 && nc == c-1) return true;
+	if(nr == r+1 && nc == c+2) return true;
+	if(nr == r+2 && nc == c+1) return true;
+	if(nr == r-1 && nc == c+2) return true;
+	if(nr == r-2 && nc == c+1) return true;
+	if(nr == r+1 && nc == c-2) return true;
+	if(nr == r+2 && nc == c-1) return true;
+
+	// if(nr>0 && nc>1 && nr == r-1 && nc == c-2) return true;
+	// if(nr>1 && nc>=0 && nr == r-2 && nc == c-1) return true;
+	// if(nr>0 && nc<6 && nr == r-1 && nc == c+2) return true;
+	// if(nr>1 && nc<7 && nr == r-2 && nc == c+1) return true;
+	// //if(nr<6 && nc>0 && nr == r+2 && nc == c-1) return true;
+	// if(nr<7 && nc>1 && nr == r+1 && nc == c-2) return true;
+	// if(nr<6 && nc>0 && nr == r+2 && nc == c-1) return true;
+	// if(nr<7 && nc<6 && nr == r+1 && nc == c+2) return true;
+	// if(nr<6 && nc<7 && nr == r+2 && nc == c+1) return true;
 	return false;
 }
 
@@ -128,7 +139,8 @@ bool Bishop::isRook(){return false;}
 bool Bishop::isKnight(){return false;}
 
 bool Bishop::isValidAttack(int r, int c, int nr, int nc){
-	if(r<0 | r>7 | c <0 | c > 7 | nr<0 | nr>7 | nc<0 | nc>7) return false;
+	cout << "bishop is valid attack" << endl;
+	if(r<0 | r>7 | c<0 | c>7 | nr<0 | nr>7 | nc<0 | nc>7) return false;
 	if(abs(nc-c) == abs(nr-r) && nc != c && nr != r) return true;
 	return false;
 }

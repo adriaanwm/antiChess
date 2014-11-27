@@ -31,9 +31,12 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 	//check if it is an attack or just a move
 	//if it's an attack
 	if(isAttack(nr,nc,cp)){
+		cout << "isAttack" << endl;
 		//check if it's a valid attack
 		if(soldier[r][c]->isValidAttack(r,c,nr,nc)){
+			cout << "isValidAttack" << endl;
 			if(soldier[r][c]->isQueen()){
+				cout << "isQueen" << endl;
 				if(isStraight(r,c,nr,nc)){
 					if(emptyStraightLane(r,c,nr,nc)){
 						if(performAttack(r,c,nr,nc)) return true;
@@ -49,6 +52,7 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 					return false;
 				}
 			} else if(soldier[r][c]->isRook()){
+				cout << "isRook" << endl;
 				if(isStraight(r,c,nr,nc)){
 					if(emptyStraightLane(r, c, nr, nc)){
 						if(performAttack(r,c,nr,nc)) return true;
@@ -57,6 +61,7 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 				}
 				return false;
 			} else if(soldier[r][c]->isBishop()){
+				cout << "isBishop" << endl;
 				if(isDiagonal(r,c,nr,nc)){
 					if(emptyDiagonalLane(r,c,nr,nc)){
 						if(performAttack(r,c,nr,nc)) return true;
@@ -73,10 +78,15 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 	}
 	//if it is just a move
 	else{
-		if(hasAvailableAttack(cp)) return false;
+		if(hasAvailableAttack(cp)) {
+			cout << "hasAvailableAttack" << endl;
+			return false;
+		}
 		else{
+			cout << "does not have available attack" << endl;
 			//check if it's a valid move
 			if(soldier[nr][nc] == NULL && soldier[r][c]->isValidMove(r,c,nr,nc)){
+				cout << "isvalidmove" << endl;
 				//do the move
 				if(soldier[r][c]->isQueen()){
 					if(isStraight(r,c,nr,nc)){
@@ -114,6 +124,7 @@ bool Board::move(int r, int c, int nr, int nc, string cp){
 				if(performMove(r,c,nr,nc)) return true;
 				return false;
 			}
+			cout << "isInvalidMove" << endl;
 		}
 	}
 	return false;
@@ -232,6 +243,22 @@ bool Board::gameOver(){
 		return true;
 	}
 	return false;
+}
+
+bool Board::stalemate(){
+	if(whiteDeadSoldier[14]!=NULL && blackDeadSoldier[14]!=NULL){
+		return true;
+	}
+	return false;
+}
+
+string Board::winner(){
+	if(whiteDeadSoldier[15] != NULL){
+		return "w";
+	}else if(blackDeadSoldier[15] != NULL){
+		return "b";
+	}
+	return " " ;
 }
 
 bool Board::hasAttackIsKing(int r, int c, string player){
@@ -393,6 +420,8 @@ bool Board::hasAttackDiagonal(int r,int c,string player){
 bool Board::emptyStraightLane(int r, int c, int nr, int nc){
 	int t;
 	if(r == nr){
+		if(c == nc-1) return true;
+		if(c == nc+1) return true;
 		if(c>nc){
 			t = c-1;
 			while(soldier[t][c] == NULL){
@@ -411,6 +440,8 @@ bool Board::emptyStraightLane(int r, int c, int nr, int nc){
 		}
 	}
 	if(c == nc){
+		if(r == nr-1) return true;
+		if(r == nr+1) return true;
 		if(r>nr){
 			t = r-1;
 			while(soldier[t][c] == NULL){
@@ -433,13 +464,16 @@ bool Board::emptyStraightLane(int r, int c, int nr, int nc){
 	return false;
 }
 bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
+	cout << "emptyDiagonalLane function" << endl;
 	int t1, t2;
 
 	//top
 	if(r<nr){
+		cout << "top diagonal" << endl;
 		//topright
 		if(c<nc){
 			t1 = r+1; t2 = c+1;
+			if(nr == r+1 && nc == c+1) return true;
 			while(soldier[t1][t2] == NULL){
 				if(t1 == nr-1) return true;
 				t1++; t2++;
@@ -448,6 +482,7 @@ bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
 		}
 		//topleft
 		if(c>nc){
+			if(nr == r+1 && nc == c-1) return true;
 			t1 = r+1; t2 = c-1;
 			while(soldier[t1][t2] == NULL){
 				if(t1 == nr-1) return true;
@@ -458,10 +493,13 @@ bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
 	}
 	//bottom
 	if(r>nr){
+		cout << "bottom diagonal" << endl;
 		//bottomright
 		if(c<nc){
+			if(nr == r-1 && nc == c+1) return true;
 			t1 = r-1; t2 = c+1;
 			while(soldier[t1][t2] == NULL){
+				cout << "t1, t2 null" << endl;
 				if(t1==nr+1) return true;
 				t1--; t2++;
 			}
@@ -469,6 +507,7 @@ bool Board::emptyDiagonalLane(int r, int c, int nr, int nc){
 		}
 		//bottomleft
 		if(c>nc){
+			if(nr == r-1 && nc == c-1) return true;
 			t1 = r-1; t2 = c-1;
 			while(soldier[t1][t2] == NULL){
 				if(t1==nr+1) return true;

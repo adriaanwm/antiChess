@@ -32,7 +32,14 @@ void ChessGame::asciiPlay(){
 	   	changePlayer();
 	   }
 
+	   if(board->stalemate()){
+	   	cout << "Stalemate. The winner is " << currentPlayer << endl;
+	   	over = true;
+	   }
+
+
 	   if(board->gameOver()){
+	   	cout << "The winner is " << board->winner() << endl;
 	   	over = true;
 	   }
 
