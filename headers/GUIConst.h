@@ -69,5 +69,6 @@ const char MEDIUMGREEN[] = "#0099CC"; //--Like in the Food's industry, green is 
 const char DarkSquare[] = "#263026";
 const char LightSquare[] = "#d0d0d0";
 
+const char Clicked[] = "button_press_event";
 
 #endif

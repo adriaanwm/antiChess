@@ -6,6 +6,8 @@
 #include "../headers/ScoreWidget.h"
 #include "../headers/BoardWidget.h"
 #include "../headers/StatusWidget.h"
+#include "../headers/ActionSetter.h"
+
 
 
 //#include "..//"
@@ -13,13 +15,17 @@
 class Window {
 
 private:
+   ActionSetter StateSet;
+
    GtkWidget *TopWindow;
    GtkWidget *MainFrame;
    GtkWidget *BoardTable;
 
    ScoreWidget TopScore;
-   BoardWidget Board;
+   BoardWidget GUIBoard;
    StatusWidget BottomStatus;
+
+
 
    //--Applies Desired Properties (Dimensions, Title, Pos ect.) to the main window--//
    void SetUpWindow();

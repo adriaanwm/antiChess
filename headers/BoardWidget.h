@@ -7,19 +7,28 @@
 #include "../headers/EventBoxes.h"
 #include "../headers/ImageFiles.h"
 
+class ActionSetter;
+
+
 class BoardWidget
 {
 
 private:
 	GtkWidget* BoardTable;
 
-	EventBoxes ChessSquare[XChessSquares][YChessSquares];
-	//ImageFiles UnitPicture;
+	EventBoxes* ChessSquare[XChessSquares][YChessSquares];
+	ImageFiles UnitPicture;
 	void AttachBoxes();
+	ActionSetter *ActionSetterPtr;
 
 public:
 	BoardWidget();
 	~BoardWidget();
+
+	int drawBoard();
+
+	void setActionSetter(ActionSetter* Passed);
+
 
 	//--Return pointer to GTK Score Banner Widget--//
 	GtkWidget* GetWidget();

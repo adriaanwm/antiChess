@@ -31,9 +31,9 @@ TestPath = tests/unit_tests/
 all: antichess soldier_tests
 	$(print) "$(bld) Make All$(cls)"
 
-antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o $(ObjectPath)StatusWidget.o $(ObjectPath)ScoreWidget.o $(ObjectPath)BoardWidget.o $(ObjectPath)EventBoxes.o $(ObjectPath)ImageFiles.o $(ObjectPath)PlayerUnit.o
+antichess: $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o $(ObjectPath)StatusWidget.o $(ObjectPath)ScoreWidget.o $(ObjectPath)BoardWidget.o $(ObjectPath)EventBoxes.o $(ObjectPath)ImageFiles.o $(ObjectPath)PlayerUnit.o $(ObjectPath)ActionSetter.o
 	$(print) "$(bld) Make AntiChess$(cls)"
-	$(Compiler) $(CFlags) $(Outarg) $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o $(ObjectPath)StatusWidget.o $(ObjectPath)ScoreWidget.o $(ObjectPath)BoardWidget.o $(ObjectPath)EventBoxes.o $(ObjectPath)PlayerUnit.o $(ObjectPath)ImageFiles.o $(GTKpack)
+	$(Compiler) $(CFlags) $(Outarg) $(ExPath)antichess $(ObjectPath)main.o $(ObjectPath)chessgame.o $(ObjectPath)board.o $(ObjectPath)soldier.o $(ObjectPath)Window.o $(ObjectPath)StatusWidget.o $(ObjectPath)ScoreWidget.o $(ObjectPath)BoardWidget.o $(ObjectPath)EventBoxes.o $(ObjectPath)PlayerUnit.o $(ObjectPath)ImageFiles.o $(ObjectPath)ActionSetter.o $(GTKpack)
 
 soldier_tests: $(ObjectPath)soldier.o $(ObjectPath)soldier_tests.o
 	$(print) "$(bld) Make soldier tests$(cls)"	
@@ -58,7 +58,7 @@ $(ObjectPath)soldier_tests.o: $(TestPath)soldier_tests.cpp $(HeaderPath)soldier.
 	$(print) "$(bld) Compiling soldier_tests.o$(cls)"
 	$(Compiler) $(PreCompArg) $(TestPath)soldier_tests.cpp $(Outarg) $(ObjectPath)soldier_tests.o
 
-$(ObjectPath)Window.o: $(HeaderPath)Window.h $(HeaderPath)GUIConst.h $(HeaderPath)ScoreWidget.h $(HeaderPath)StatusWidget.h $(HeaderPath)ScoreWidget.h $(Src)Window.cpp
+$(ObjectPath)Window.o: $(HeaderPath)Window.h $(HeaderPath)GUIConst.h $(HeaderPath)ScoreWidget.h $(HeaderPath)StatusWidget.h $(HeaderPath)ScoreWidget.h $(HeaderPath)board.h $(Src)Window.cpp
 	$(print) "$(bld) Compiling Window.o$(cls)"
 	$(Compiler) $(PreCompArg) $(Src)Window.cpp $(Outarg) $(ObjectPath)Window.o $(GTKpack)
 
@@ -78,13 +78,17 @@ $(ObjectPath)EventBoxes.o: $(HeaderPath)EventBoxes.h $(Src)EventBoxes.cpp $(Head
 	$(print) "$(bld) Compiling EventBoxes.o$)$(cls)"
 	$(Compiler) $(PreCompArg) $(Src)EventBoxes.cpp $(Outarg) $(ObjectPath)EventBoxes.o $(GTKpack)
 
-$(ObjectPath)ImageFiles.o: $(HeaderPath)ImageFiles.h $(HeaderPath)PlayerUnit.h
+$(ObjectPath)ImageFiles.o: $(HeaderPath)ImageFiles.h $(HeaderPath)PlayerUnit.h $(HeaderPath)filenames.h $(Src)ImageFiles.cpp
 	$(print) "$(bld) Compiling ImageFiles.o $(cls)"
 	$(Compiler) $(PreCompArg) $(Src)ImageFiles.cpp $(Outarg) $(ObjectPath)ImageFiles.o $(GTKpack)
 
-$(ObjectPath)PlayerUnit.o: $(HeaderPath)PlayerUnit.h
+$(ObjectPath)PlayerUnit.o: $(HeaderPath)PlayerUnit.h $(Src)PlayerUnit.cpp
 	$(print) "$(bld) Compiling PlayerUnit.o $(cls)"
 	$(Compiler) $(PreCompArg) $(Src)PlayerUnit.cpp $(Outarg) $(ObjectPath)PlayerUnit.o $(GTKpack)
+
+$(ObjectPath)ActionSetter.o: $(HeaderPath)ActionSetter.h $(HeaderPath)board.h  $(HeaderPath)BoardWidget.h $(Src)ActionSetter.cpp
+	$(print) "$(bld) Compiling ActionSetter.o $(cls) "
+	$(Compiler) $(PreCompArg) $(Src)ActionSetter.cpp $(Outarg) $(ObjectPath)ActionSetter.o $(GTKpack) 
 
 
 clean:

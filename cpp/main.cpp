@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 
-#include "../headers/chessgame.h"
+//#include "../headers/chessgame.h"
 #include "../headers/Window.h"
 
 using namespace std;
@@ -9,11 +9,13 @@ using namespace std;
 
 int main(int argc, char *argv[]){
 
-	string Name1 = "David", Name2 = "Player 2";
+	string Name1 = "Player 1", Name2 = "Player 2";
 
 	//--ASCII Menu, gets names and passes to window object--//
 
+
 	gtk_init(&argc, &argv);
+
 	//ChessGame game;
 
 	Window MainWindow(Name1, Name2);

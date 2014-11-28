@@ -11,7 +11,7 @@
 using namespace std;
 
 
-Window::Window(string Name1, string Name2)
+Window::Window(std::string Name1, std::string Name2)
 {
    MakeMainfr();
    SetUpWindow();
@@ -19,6 +19,8 @@ Window::Window(string Name1, string Name2)
    TopScore.SetNames(Name1, Name2);
 
    AttachContainers();
+   StateSet.SetBoardWidget(&GUIBoard);
+   GUIBoard.setActionSetter(&StateSet);
 }
 
 Window::~Window()
@@ -42,7 +44,7 @@ void Window::AttachContainers()
 
    gtk_table_attach(
       GTK_TABLE(MainFrame), 
-      Board.GetWidget(), 
+      GUIBoard.GetWidget(), 
       BoardXStart, 
       BoardXEnd, 
       BoardYStart, 

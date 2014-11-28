@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <iostream>
+#include <cstdlib>
 
 #include "../headers/BoardWidget.h"
 #include "../headers/GUIConst.h"
@@ -17,8 +18,6 @@ BoardWidget::BoardWidget()
 
    //--BoardTable--//
    gtk_widget_set_size_request(BoardTable, TableSizeX, TableSizeY);
-
-   AttachBoxes();
 }
 
 
@@ -33,6 +32,7 @@ GtkWidget* BoardWidget::GetWidget()
 {
 	return BoardTable;
 }
+
 
 void BoardWidget::AttachBoxes()
 {
@@ -49,14 +49,15 @@ void BoardWidget::AttachBoxes()
 
 	while ((x < XChessSquares) && (y < YChessSquares)) {
 
-		ChessSquare[x][y].setCord(x,y);
+		ChessSquare[x][y] = new EventBoxes;
+		if (ChessSquare[x][y] == NULL) {cerr << "Memeory Error" << endl; exit(1);} 
 
-		cout << x << endl;
-		cout << y << endl;
+
+		ChessSquare[x][y]->setCord(x,y, ActionSetterPtr);
 
 		gtk_table_attach(
 			GTK_TABLE(GTK_TABLE(BoardTable)), 
-			ChessSquare[x][y].GetWidget(), 
+			ChessSquare[x][y]->GetWidget(), 
 			x_Start, 
 			x_End, 
 			y_Start, 
@@ -81,4 +82,11 @@ void BoardWidget::AttachBoxes()
 		}
 
 	};
+}
+
+
+void BoardWidget::setActionSetter(ActionSetter* Passed)
+{
+	ActionSetterPtr = Passed;
+    AttachBoxes();	
 }
