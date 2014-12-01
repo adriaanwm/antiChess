@@ -4,7 +4,7 @@
 #include <gtk/gtk.h>
 
 const char BadMoveMSG[] = "Invalid Move";
-const char WorkingMSG[] = "Too many Errors :'(";
+const char WorkingMSG[] = "No Move Errors :)";
 
 class StatusWidget
 {
