@@ -18,11 +18,11 @@ void ChessGame::asciiPlay(){
 		cout << "current player is: " << currentPlayer << endl;
 		board->display();
 
-		string request = "which piece would you like to use?\n> ";
+		string request = "which piece would you like to use? (r c)\n> ";
 		int piece[2];
 		N::userSelectSquare(piece,request);
 
-		string request2 = "where would you like to move it?\n> ";
+		string request2 = "where would you like to move it? (r c)\n> ";
 	   int newPosition[2];
 	   N::userSelectSquare(newPosition,request2);
 
